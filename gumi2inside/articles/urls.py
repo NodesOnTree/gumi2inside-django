@@ -5,6 +5,7 @@ app_name = 'articles'
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('create/', views.create, name="create"),
-    path('watch_articles/', views.watch_articles, name='watch_articles'),
+    # path('watch_articles/', views.watch_articles, name='watch_articles'),
+    path('watch_title/', views.watch_title, name='watch_title'),
     path('list/', views.list, name="list"),
 ]   

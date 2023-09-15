@@ -1,9 +1,26 @@
+
+
 {% extends "base.html" %}
 {% block content %}
-    {% for article in articles %}
-    {{article.title}}
-    {{article.content}}
-<hr>
-    {% endfor %}
 
+
+{% for article in articles %}
+<hr>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title"><p>제목 : {{article.title}}</p>
+                    </h5>
+                    <p class="card-text">이 게시물은 파란색 배경과 흰색 텍스트를 가지고 있습니다.</p>
+                    <a href="{% url "articles:watch_title" %}" class="btn btn-light">자세히 보기!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endfor %}
 {% endblock content %}
