@@ -16,14 +16,14 @@
     <header class="bg-img-ssafy">
       <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url "articles:index" %}">구미2반!</a>
+          <a class="navbar-brand" href="{% url "articles:home" %}">구미2반!</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">홈</a>
+                <a class="nav-link active" aria-current="page" href="{% url "articles:home" %}">홈</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url "articles:create" %}">글 쓰기</a>
