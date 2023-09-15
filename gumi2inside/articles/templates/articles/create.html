@@ -3,7 +3,7 @@
 {% block content %}
 <div>
     <h2>새 글 쓰기</h2>
-    <form action="{% url "articles:complete" %}" method="POST">
+    <form id="write" action="{% url "articles:watch_articles" %}" method="POST">
       {% csrf_token %}  <!--POST 요청시 필요한 요소-->
       <p>
         <label for="title">제목 : </label>
