@@ -14,7 +14,12 @@
                     <h5 class="card-title"><p>제목 : {{article.title}}</p>
                     </h5>
                     <p class="card-text">이 게시물은 파란색 배경과 흰색 텍스트를 가지고 있습니다.</p>
-                    <a href="{% url "articles:watch_title" %}" class="btn btn-light">자세히 보기!</a>
+                    {% comment %} <form method="POST" action="{% url "articles:detail" article.pk %}">
+                        {% csrf_token %}자세히 보기 <a href="{% url "articles:detail" %}" class="btn btn-light"></a></form> {% endcomment %}
+                        <form method="POST" action="{% url 'articles:detail' article.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-light">자세히 보기</button>
+                          </form>
                 </div>
             </div>
         </div>

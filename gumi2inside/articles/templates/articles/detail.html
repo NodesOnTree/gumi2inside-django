@@ -1,0 +1,21 @@
+
+  
+  {% extends "base.html" %}
+  
+  {% block content %}
+  <div>
+    <h1>detail</h1>
+    <div>
+      <p> 제목 : {{title}}</p>
+      <div>
+        <p> 내용 : {{content}}</p>
+      </div>
+      <hr>
+    </div>
+    <form action="{% url "articles:delete" pk%}">
+      <input type="submit" value="삭제">
+    </form>
+    <hr>
+  </div>
+
+{% endblock content %}
