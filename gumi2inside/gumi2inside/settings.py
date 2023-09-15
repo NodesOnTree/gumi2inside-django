@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-2mutif%q1ft7^z63i0)9*w_m@c#xu7ynrmb*4%(9a6uva_1-9x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-54-180-115-105.ap-northeast-2.compute.amazonaws.com',
+                 'gumi2inside.site']
 
 
 # Application definition
