@@ -5,6 +5,7 @@ from .models import Article, Comment
 def index(request):
     return render(request, "articles/index.html")
 
+<<<<<<< HEAD
 
 def watch_articles(request):
     article = Article.objects.all()
@@ -15,3 +16,7 @@ def watch_articles(request):
         'comments' : comment,
     }
     return render(request, "articles/watch_articles.html", context)
+=======
+def create(request):
+    return render(request, "articles/create.html")
+>>>>>>> b62371fffe115d444bb9b4fbf3d40cd70ffa4490
