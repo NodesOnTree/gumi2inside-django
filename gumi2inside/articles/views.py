@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Article, Comment
 
 # Create your views here.
-def index(request):
-    return render(request, "articles/index.html")
+def home(request):
+    return render(request, "articles/home.html")
 
 def create(request):
     # title = request.POST.get('title')
