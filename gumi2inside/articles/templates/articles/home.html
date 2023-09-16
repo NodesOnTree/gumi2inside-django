@@ -1,4 +1,78 @@
 {% extends "base.html" %}
+{% load static %}
+{% block style %}
+.home_html_container{
+  height: 600px;
+	width: 100%;
+}
+
+.home_html_write_at{
+  height: 600px;
+  width:50%;
+}
+
+.home_html_box{
+  background-color :white;
+  height: 30px;
+	width: 100px;
+}
+
+
+{% endblock style %}
+
 {% block content %}
-  <a href="{% url 'articles:list' %}" class="btn btn-primary">글 목록들 ㅋ</a>
+
+  <div class="d-flex home_html_container d-flex">
+
+    <div class="home_html_write_at d-flex flex-column justify-content-center">
+
+      <div class="d-flex justify-content-end mb-3">
+        <div class="d-flex flex-column">
+          <h1 class="fw-bold h1">안녕하세요</h1>
+          <h1 class="fw-bold h2">우린 찐따들이지만 열심히 만들고 있어요~</h1>
+          <h1 class="fw-bold h2">열심히 만들고 있어요~</h1>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <a href="{% url "articles:new" %}"><button class="btn btn-light btn-lg text-center me-5">글 쓰기</button></a>
+          <a href="{% url "articles:list" %}"><button class="btn btn-light btn-lg text-center me-5">글 목록</button></a>
+        </div>
+      </div>
+      
+      {% comment %} 카로쉘 {% endcomment %}
+        <div class="home_html_write_at m-5 border border-white border-5">
+          <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      {% comment %} 카로쉘 {% endcomment %}
+      
+    </div>
+  </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock content %}
