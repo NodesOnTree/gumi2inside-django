@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-2mutif%q1ft7^z63i0)9*w_m@c#xu7ynrmb*4%(9a6uva_1-9x
 DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-54-180-115-105.ap-northeast-2.compute.amazonaws.com',
-                 'gumi2inside.site']
+                 'gumi2inside.site',
+                 'localhost',
+                 '127.0.0.1'
+                 ]
 
 
 # Application definition
@@ -118,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
