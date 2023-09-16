@@ -1,34 +1,51 @@
 from django.shortcuts import render, redirect
 from .models import Article, Comment
 
+
 # Create your views here.
 def home(request):
     return render(request, "articles/home.html")
 
+
+def new(request):
+    return render(request, "articles/new.html")
+
+
 def create(request):
-    title = request.POST.get('title')
-    content = request.POST.get('content')
+    title = request.POST.get("title")
+    content = request.POST.get("content")
     article = Article(title=title, content=content)
     article.save()
-    return render(request, 'articles/create.html')
+    return render(request, "articles/complete.html")
 
-def watch_title(request):
-    articles = Article.objects.all()
-    comments = Comment.objects.all()
 
+def complete(request):
+    return redirect("articles:list")
+
+
+def detail(request, pk):
+    article = Article.objects.get(pk=pk)
     context = {
-        'articles': articles,
-        'comments': comments,
+        "pk": pk,
+        "title": article.title,
+        "content": article.content,
     }
-    return render(request, "articles/watch_title.html", context)
+    return render(request, "articles/detail.html", context)
+
 
 def list(request):
     articles = Article.objects.all()
     context = {
-        'articles': articles,
+        "articles": articles,
     }
-    return render(request, 'articles/list.html', context)
+    return render(request, "articles/list.html", context)
 
 
 # def delete(request):
 #     articles = Aricle.
+
+
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    article.delete()
+    return redirect("articles:list")
