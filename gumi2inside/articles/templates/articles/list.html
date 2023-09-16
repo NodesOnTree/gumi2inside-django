@@ -2,26 +2,22 @@
 
 {% extends "base.html" %}
 {% block content %}
-{% for article in articles %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card bg-white text-black mt-5">
-                <div class="card-body">
-                    <h5 class="card-title"><p>제목 : {{article.title}}</p>
-                    </h5>
-                    <p class="card-text">이 게시물은 파란색 배경과 흰색 텍스트를 가지고 있습니다.</p>
-                    {% comment %} <form method="POST" action="{% url "articles:detail" article.pk %}">
-                        {% csrf_token %}자세히 보기 <a href="{% url "articles:detail" %}" class="btn btn-light"></a></form> {% endcomment %}
-                        <form method="POST" action="{% url 'articles:detail' article.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-light">자세히 보기</button>
-                          </form>
+{% for title, date_gap,pk in temp%}
+<form method="POST" action="{% url 'articles:detail' pk%}">
+{% csrf_token %}
+    <div  class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card bg-white text-blackW mt-5">
+                    <button type='submit' class="card-body bg-white">
+                        <h5 class="card-title"><p>제목 : {{title}}</p>
+                        </h5>
+                        <p class="card-text">{{date_gap}}</p>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+</form>
 {% endfor %}
 {% endblock content %}
