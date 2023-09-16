@@ -1,7 +1,7 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
-    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>구미2반 커뮤니티!</title>
@@ -26,7 +26,7 @@
     <header class="sticky-top">
       <nav class="navbar bg-white border-bottom border-body" data-bs-theme="whiteWW">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url "home" %}">구미2반!</a>
+          <a class="navbar-brand" href="{% url 'home' %}"><img src="{%static 'title-removebg-preview.png'%}" height="30px"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
