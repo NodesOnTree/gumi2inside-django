@@ -9,8 +9,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 3px solid #3396f4;
     background-color: white;
-    width: 150px;
-    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -29,16 +27,13 @@
     background-color: white;
 }
 
-.bubble-modal-container{
-
-}
 
 
 {% endblock style %}
 
 {% block content %}
 
-<div class="bubble-modal-container modal fade" id="writeModal" tabindex="-1" aria-labelledby="writeModalLabel" aria-hidden="true">
+<div class="modal fade" id="writeModal" tabindex="-1" aria-labelledby="writeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -64,19 +59,23 @@
     </button>
 </div>
 
-<div class="container">
-    {% for bubble in bubbles %}
-    <div class="bubble mx-auto" style="max-width: 500px;">
+<div class="container d-flex flex-wrap pt-2">
+    {% for width, bubble in bubbles %}
+    <div class="bubble mx-auto" style="width: {{ width }}px; height: {{ width }}px; max-width: 500px;">
         <div>
             {{bubble.content}}
         </div>
         <div class="bubble-emotions-container d-flex justify-content-between">
-            <button class="bubble-emotions btn btn-light" onclick="likeBubble({{ bubble.id }})">
-                <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid">
-            </button>
-            <button class="bubble-emotions btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
-                <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid">
-            </button>
+            <a href="{% url "ciders:like_bubble" bubble.id %}">
+                <button class="bubble-emotions btn btn-light" onclick="likeBubble({{ bubble.id }})">
+                    <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid">
+                </button>
+            </a>
+            <a href="{% url "ciders:dislike_bubble" bubble.id %}">
+                <button class="bubble-emotions btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
+                    <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid">
+                </button>
+            </a>
         </div>
     </div>
     {% endfor %}

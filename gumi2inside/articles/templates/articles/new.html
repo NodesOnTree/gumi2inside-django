@@ -12,31 +12,41 @@
 }
 
 .my-hr2 {
-  border: 0;
+  border: 2;
   height: 2px;
-  background: black;
+
 }
+.btn1{
+  background-color:#8c99a8;
+  color:white;
+}
+
+.btn1:hover {
+  background-color:#3396f4;
+  color:white;
+}  
+
 {% endblock style %}
 
 {% block content %}
 <div class="container pt-3">
-  <div class="div">
+  <div class="div bg-light border py-3 shadow-lg">
     <div>
-    <h2 class="m-3" style="text-align:center;"><strong>새 글 쓰기</strong></h2>
+    <h2 class="m-3" style="text-align:center;"><strong>글쓰기</strong></strong></h2>
     </div>
     <hr class="mx-3 my-hr2">
     <form action="{% url "articles:create" %}" method="POST">
       {% csrf_token %}  <!--POST 요청시 필요한 요소-->
       <div class="mx-3">
-        <input type="text" placeholder="제목" id="title" name="title" style="width: 100%;"> 
+        <input type="text" placeholder=" 제목" id="title" name="title" style="width: 100%;"> 
       </div>
       <p></p>
       <hr class="mx-3 my-hr2">
       <div class="mx-3">
-        <textarea name="content" placeholder="내용" id="content" cols="30" rows="8" style="width: 100%;"></textarea>
+        <textarea name="content" placeholder=" 내용" id="content" cols="30" rows="16" style="width: 100%;"></textarea>
       </div>
-      <div style="float:right">
-        <input type="submit" value="글쓰기" class="m-3 input1 rounded">
+      <div class="d-grid gap-2 mx-3 mt-2">
+        <input class="btn btn1" type="submit" value="제출"></input>
       </div>
     </form>
   </div>

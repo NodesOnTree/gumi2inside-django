@@ -18,6 +18,11 @@ def create(request):
     article.save()
     return render(request, "articles/complete.html")
 
+# def comment(request):
+#     content = request.POST.get("comment")
+#     comment = Comment(content=content)
+#     comment.save()
+#     return redirect("articles:detail")
 
 def complete(request):
     return redirect("articles:list")
