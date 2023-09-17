@@ -1,24 +1,36 @@
-  {% extends "base.html" %}
-  {% block style %}
+{% extends "base.html" %}
+{% block style %}
+.bg_top_2{
+  width: 100%;
+  height: 330px;
+  background-color: white;
+  position: absoulte ;
+  top: 0;
+  margin: 0;
+}
+.bg-yellow{
+  background-color: #ffe651;
+}
 
-  {% endblock style %} 
-  {% block content %}
-  <div>
+{% endblock style %} 
+
+{% block content %}
+<div class='bg_top_2'>
+  <div class="container mt-5 mb-3">
     <div>
       <strong>제목 : {{ title }}</strong>
       <span style="float: right;">작성시간 : {{ new_datetime }}</span>
       <div style="clear: both;"></div>
       <hr>
-  </div>
+    </div>
       <div>
         <p> 내용 : {{ content|linebreaks }}</p>
       </div>
       <hr>
-    </div>
-    <form action="{% url "articles:delete" pk%}">
-      <input type="submit" value="삭제">
-    </form>
-    <hr>
   </div>
+  <form action="{% url "articles:delete" pk%}">
+    <input type="submit" value="삭제">
+  </form>
+</div>
 
 {% endblock content %}
