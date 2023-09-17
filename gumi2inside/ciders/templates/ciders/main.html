@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+.bubble {
+    border-radius: 25px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #3396f4;
+    color: #ffffff; 
+}
+
+{% endblock style %}
+
+{% block content %}
+<div class="d-flex justify-content-end fixed-bottom mr-4 mb-4 w-3 h-3">
+    <a href="{% url "ciders:create" %}">
+        <img src="{% static 'bubble_write_button.png' %}" alt="글쓰기" class="img-fluid w-5">
+    </a>
+</div>
+
+{% for bubble in bubbles %}
+
+<div class="bubble mx-auto" style="max-width: 500px;">
+    {{bubble.content}}
+    <br>
+    {{bubble.created_at}}
+    <br>
+    <div class="d-flex">
+        <button class="btn btn-light" onclick="likeBubble({{ bubble.id }})">
+            <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid w-3">
+        </button>
+        <button class="btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
+            <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid w-3">
+        </button>
+    </div>
+</div>
+
+{% endfor %}
+{% endblock content %}
