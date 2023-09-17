@@ -11,6 +11,9 @@
 .bg-yellow{
   background-color: #ffe651;
 }
+.bg-realgrey{
+  border: 1px solid lightgrey;
+}
 
 {% endblock style %} 
 
@@ -28,7 +31,21 @@
       </div>
       <hr>
   </div>
-  <form action="{% url "articles:delete" pk%}">
+  <div class="container mt-5">
+    <strong>댓글()</strong>
+    <form action="articles:comment" method="POST">  <!--action을 url 형식으로 바꿔줘야함-->
+      {% csrf_token %}
+      <textarea name="comment" id="comment" row="3" style="width: 100%;"></textarea>
+      <input class="btn btn-light btn-lg text-center me-5" type="submit" value="댓글 쓰기">
+    </form>
+  </div>
+  <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
+    <div class="mb-3">닉네임 / 시간</div>
+    <div class="bt-2 mx-5">댓글이당~~</div>
+  </div>
+  
+
+  <form action="{% url "articles:delete" pk %}">
     <input type="submit" value="삭제">
   </form>
 </div>
