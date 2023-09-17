@@ -1,15 +1,31 @@
-
-
 {% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+.bg_card{
+    background-image: url("{%static 'card_bg2.png'%}");
+    background-repeat: no-repeat;
+    background-size : 100% 100% ;
+    height: auto;
+}
+.border1{
+        border: 2px black solid;
+}
+    
+
+{% endblock style %}
+
+
 {% block content %}
+<div class='border1'>
 {% for title, date_gap,pk in temp%}
 <form method="POST" action="{% url 'articles:detail' pk%}">
 {% csrf_token %}
-    <div  class="container">
+    <div  class="container ">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card bg-white text-blackW mt-5">
-                    <button type='submit' class="card-body bg-white">
+            <div class="col-md-6 ">
+                <div class="card  text-black mt-5">
+                    <button type='submit' class="card-body bg_card" >
                         <h5 class="card-title"><p>제목 : {{title}}</p>
                         </h5>
                         <p class="card-text">{{date_gap}}</p>
@@ -20,4 +36,5 @@
     </div>
 </form>
 {% endfor %}
+</div>
 {% endblock content %}

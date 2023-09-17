@@ -24,29 +24,32 @@
   <body>
     <!-- 네비게이터 -->
     <header class="sticky-top">
-      <nav class="navbar bg-white border-bottom border-body" data-bs-theme="whiteWW">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'home' %}"><img src="{%static 'title-removebg-preview.png'%}" height="30px"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url "home" %}">홈</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url "articles:new" %}">글 쓰기</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">검색</button>
-            </form>
+      <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="{% url 'home' %}">
+                  <img src="{% static 'title-removebg-preview.png' %}" height="30px" alt="로고">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'articles:new' %}">글 쓰기</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'articles:list' %}">글 목록</a>
+                      </li> 
+                  </ul>
+                
+              </div>
           </div>
-        </div>
       </nav>
-    </header>
+  </header>
     <!-- 네비게이터 -->
     <div class='bg_top'>
     {% block content %}

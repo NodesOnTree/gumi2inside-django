@@ -1,15 +1,17 @@
-
-  
   {% extends "base.html" %}
-  
+  {% block style %}
+
+  {% endblock style %} 
   {% block content %}
   <div>
-    <h1>detail</h1>
     <div>
-      <p> 제목 : {{title}}</p>
-      <p> 작성시간 : {{new_datetime}}
+      <strong>제목 : {{ title }}</strong>
+      <span style="float: right;">작성시간 : {{ new_datetime }}</span>
+      <div style="clear: both;"></div>
+      <hr>
+  </div>
       <div>
-        <p> 내용 : {{content}}</p>
+        <p> 내용 : {{ content|linebreaks }}</p>
       </div>
       <hr>
     </div>

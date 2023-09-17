@@ -35,15 +35,18 @@ def detail(request, pk):
         "content": article.content,
         "new_datetime": new_datetime,
     }
+    
     return render(request, "articles/detail.html", context)
 
 
 def list(request):
-    articles = Article.objects.all()
-    print(articles)
+    articles = Article.objects.order_by('-id')
+   
     datetime_gaps=[]
     article_titles=[]
     article_pks=[]
+    
+
     for article in articles:
         time = article.created_at
         article_titles.append(article.title)
@@ -51,6 +54,7 @@ def list(request):
         new_datetime=''
         new_datetime+=str(time)[0:11]
         new_datetime+=str(time)[11:16]
+
         current_time = datetime.now()
         now_datetime=''
         now_datetime+=str(current_time)[0:11]
@@ -74,8 +78,7 @@ def list(request):
                 datetime_gaps.append(f'{time_gap//60}시간 전')
             else:
                 datetime_gaps.append(f'{time_gap}분 전')
-    print(article_titles)
-    print(datetime_gaps)
+
     temp=zip(article_titles,datetime_gaps,article_pks)
     context = {
         'temp': temp,
@@ -86,8 +89,6 @@ def list(request):
     return render(request, "articles/list.html", context)
 
 
-# def delete(request):
-#     articles = Aricle.
 
 
 def delete(request, pk):

@@ -2,20 +2,20 @@
 
 {% block content %}
 <div>
-    <h2>새 글 쓰기</h2>
-    <form action="{% url "articles:create" %}" method="POST">
-      {% csrf_token %}  <!--POST 요청시 필요한 요소-->
-      <p>
-        <label for="title">제목 : </label>
-        <input type="text" id="title" name="title">
-      </p>
-      <p>
-        <label for="content">내용 : </label>
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
-      </p>
-      <p>
-        <input type="submit" value="글쓰기">
-      </p>
-    </form>
-  </div>
+  <h2>새 글 쓰기</h2>
+  <form action="{% url "articles:create" %}" method="POST">
+    {% csrf_token %}  <!-- POST 요청시 필요한 요소 -->
+    <p>
+      <label for="title">제목 : </label>
+      <input type="text" id="title" name="title">
+    </p>
+  
+      <label for="content">내용 : </label>
+      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="글쓰기">
+    </p>
+  </form>
+</div>
 {% endblock content %}
