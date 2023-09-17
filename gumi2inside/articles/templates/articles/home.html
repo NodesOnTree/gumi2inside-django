@@ -41,15 +41,15 @@
       </div>
       
       {% comment %} 카로쉘 {% endcomment %}
-        <div class="home_html_write_at m-5 border border-white border-5">
+        <div class="home_html_write_at m-5 border border-white border-5 bg-light">
           <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
+          <div class="carousel-inner d-flex align-content-center" style="max-width: 800px; min-height: 600px; max-height: 600px;">
+            <div class="carousel-item active d-flex flex-column justify-content-center">
               <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
