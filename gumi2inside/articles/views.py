@@ -62,8 +62,8 @@ def list(request):
         time = article.created_at
         article_titles.append(article.title)
         article_pks.append(article.pk)
-        if len(article.content)>=30:
-            content=article.content[0:30]
+        if len(article.content)>=40:
+            content=article.content[0:40]
             content+='...'
             article_contents.append(content)
         else:
