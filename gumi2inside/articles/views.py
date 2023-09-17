@@ -50,12 +50,18 @@ def list(request):
     datetime_gaps=[]
     article_titles=[]
     article_pks=[]
-    
+    article_contents=[]
 
     for article in articles:
         time = article.created_at
         article_titles.append(article.title)
         article_pks.append(article.pk)
+        if len(article.content)>=30:
+            content=article.content[0:30]
+            content+='...'
+            article_contents.append(content)
+        else:
+            article_contents.append(article.content)
         new_datetime=''
         new_datetime+=str(time)[0:11]
         new_datetime+=str(time)[11:16]
@@ -84,12 +90,14 @@ def list(request):
             else:
                 datetime_gaps.append(f'{time_gap}분 전')
 
-    temp=zip(article_titles,datetime_gaps,article_pks)
+    temp=zip(article_titles,datetime_gaps,article_pks,article_contents)
     context = {
         'temp': temp,
         "articles": articles,
         'datetime_gaps':datetime_gaps,
-        "article_titles":article_titles
+        "article_titles":article_titles,
+        'article_contents':article_contents,
+
     }
     return render(request, "articles/list.html", context)
 
