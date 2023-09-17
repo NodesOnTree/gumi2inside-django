@@ -32,17 +32,19 @@
       <hr>
   </div>
   <div class="container mt-5">
-    <strong>댓글()</strong>
-    <form action="articles:comment" method="POST">  <!--action을 url 형식으로 바꿔줘야함-->
+    <strong>댓글 ({{comments_count}}) </strong>
+    <form action="{% url 'articles:comment' pk %}" method="POST">
       {% csrf_token %}
       <textarea name="comment" id="comment" row="3" style="width: 100%;"></textarea>
       <input class="btn btn-light btn-lg text-center me-5" type="submit" value="댓글 쓰기">
     </form>
   </div>
-  <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
-    <div class="mb-3">닉네임 / 시간</div>
-    <div class="bt-2 mx-5">댓글이당~~</div>
-  </div>
+  {% for comment in comments %}
+    <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
+      <div class="mb-3">{{comment.created_at}}</div>
+      <div class="bt-2 mx-5">{{comment.content}} </div>
+    </div>  
+  {% endfor %}
   
 
   <form action="{% url "articles:delete" pk %}">

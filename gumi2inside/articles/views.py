@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import Article, Comment
 from datetime import datetime
 
@@ -18,11 +19,13 @@ def create(request):
     article.save()
     return render(request, "articles/complete.html")
 
-# def comment(request):
-#     content = request.POST.get("comment")
-#     comment = Comment(content=content)
-#     comment.save()
-#     return redirect("articles:detail")
+def comment(request, pk):
+    content = request.POST.get("comment")
+    comment = Comment(content=content)
+    comment.origin_article = Article.objects.get(pk=pk)
+    comment.save()
+    print("?D?D?")
+    return redirect(reverse('articles:detail', kwargs={'pk': pk}))
 
 def complete(request):
     return redirect("articles:list")
@@ -34,11 +37,14 @@ def detail(request, pk):
     new_datetime=''
     new_datetime+=str(time)[0:11]
     new_datetime+=str(time)[11:16]
+    comments = article.comment_set.all()
     context = {
         "pk": pk,
         "title": article.title,
         "content": article.content,
         "new_datetime": new_datetime,
+        "comments": comments,
+        "comments_count": len(comments),
     }
     
     return render(request, "articles/detail.html", context)
