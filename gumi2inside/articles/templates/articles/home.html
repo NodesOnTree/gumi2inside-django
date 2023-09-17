@@ -22,20 +22,21 @@
 
 {% block content %}
 
-  <div class="d-flex home_html_container d-flex">
+  <div class="d-flex home_html_container flex-column flex-lg-row">
 
     <div class="home_html_write_at d-flex flex-column justify-content-center">
 
-      <div class="d-flex justify-content-end mb-3">
+      <div class="d-flex justify-content-center m-5">
         <div class="d-flex flex-column">
-          <h1 class="fw-bold h1">안녕하세요</h1>
-          <h1 class="fw-bold h2">우린 찐따들이지만 열심히 만들고 있어요~</h1>
-          <h1 class="fw-bold h2">열심히 만들고 있어요~</h1>
-          </div>
+          <h1 class="fw-bold h1 lh-lg">안녕하세요</h1>
+          <h1 class="fw-bold h2 lh-sm">구미 2반 귀요미들 입니다.</h1>
+          <h1 class="fw-bold h2 lh-sm">익명 게시판과 사이다를 이용해 보세용!</h1>
+          <h1 class="fw-bold h2 lh-sm">꿀잼이라구~</h1>
         </div>
-        <div class="d-flex justify-content-center">
-          <a href="{% url "articles:new" %}"><button class="btn btn-light btn-lg text-center me-5">글 쓰기</button></a>
-          <a href="{% url "articles:list" %}"><button class="btn btn-light btn-lg text-center me-5">글 목록</button></a>
+        </div>
+        <div class="d-flex justify-content-center mx-5 mb-5">
+          <a href="{% url "articles:new" %}"><button class="btn btn-secondary btn-lg text-center me-5">글 쓰기</button></a>
+          <a href="{% url "articles:list" %}"><button class="btn btn-secondary btn-lg text-center me-5">글 목록</button></a>
         </div>
       </div>
       
@@ -52,10 +53,10 @@
               <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+              <img src="{% static 'caro2.png' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+              <img src="{% static 'caro3.png' %}" class="d-block w-100" alt="...">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
