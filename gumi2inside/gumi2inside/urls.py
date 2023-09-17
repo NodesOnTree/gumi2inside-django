@@ -20,5 +20,6 @@ from articles import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include('articles.urls')),
+    path('ciders/', include('ciders.urls')),
     path('', views.home, name="home"),
 ]

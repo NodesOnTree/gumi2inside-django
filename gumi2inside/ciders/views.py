@@ -12,9 +12,6 @@ def ciders_home(request):
     }
     return render(request, "ciders/main.html", context)
 
-def ciders_create(request):
-    return render(request, "ciders/create.html")
-
 def create_bubble(request):
     bubble = Bubble()
     bubble.content = request.POST.get('content')
@@ -22,6 +19,7 @@ def create_bubble(request):
     bubble.dislike_count = 0
     bubble.expired_at = timezone.now() + timedelta(hours=1)
     bubble.save()
+    print("버블이 작성됐어요!")
 
     return redirect("/ciders")
 

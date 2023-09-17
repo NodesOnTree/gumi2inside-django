@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['ec2-54-180-115-105.ap-northeast-2.compute.amazonaws.com',
 
 INSTALLED_APPS = [
     'articles',
+    'ciders',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,8 +113,13 @@ LANGUAGE_CODE = 'ko-kr'
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
+<<<<<<< Updated upstream
 USE_L10N = True 
 # USE_TZ = True
+=======
+
+USE_TZ = False
+>>>>>>> Stashed changes
 
 
 # Static files (CSS, JavaScript, Images)

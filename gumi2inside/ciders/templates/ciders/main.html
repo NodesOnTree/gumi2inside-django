@@ -7,35 +7,79 @@
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #3396f4;
-    color: #ffffff; 
+    border: 3px solid #3396f4;
+    background-color: white;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+.bubble-write-button-container {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    width: 100px; 
+}
+
+.bubble-emotions{
+    width: 50px;
+    border: none;
+    background-color: white;
+}
+
+.bubble-modal-container{
+
+}
+
 
 {% endblock style %}
 
 {% block content %}
-<div class="d-flex justify-content-end fixed-bottom mr-4 mb-4 w-3 h-3">
-    <a href="{% url "ciders:create" %}">
-        <img src="{% static 'bubble_write_button.png' %}" alt="글쓰기" class="img-fluid w-5">
-    </a>
-</div>
 
-{% for bubble in bubbles %}
-
-<div class="bubble mx-auto" style="max-width: 500px;">
-    {{bubble.content}}
-    <br>
-    {{bubble.created_at}}
-    <br>
-    <div class="d-flex">
-        <button class="btn btn-light" onclick="likeBubble({{ bubble.id }})">
-            <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid w-3">
-        </button>
-        <button class="btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
-            <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid w-3">
-        </button>
+<div class="bubble-modal-container modal fade" id="writeModal" tabindex="-1" aria-labelledby="writeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="writeModalLabel">글 쓰기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url 'ciders:create' %}" method="post"> 
+            {% csrf_token %}
+            <div class="modal-body">
+              <textarea name="content" class="form-control" rows="5" placeholder="버블할 내용을 작성해주세요!"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Bubble!</button>
+            </div>
+        </form>
+      </div>
     </div>
 </div>
+  
+<div class="bubble-write-button-container">
+    <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#writeModal">
+        <img src="{% static 'bubble_write_button.png' %}" alt="write-bubble" class="img-fluid">
+    </button>
+</div>
 
-{% endfor %}
+<div class="container">
+    {% for bubble in bubbles %}
+    <div class="bubble mx-auto" style="max-width: 500px;">
+        <div>
+            {{bubble.content}}
+        </div>
+        <div class="bubble-emotions-container d-flex justify-content-between">
+            <button class="bubble-emotions btn btn-light" onclick="likeBubble({{ bubble.id }})">
+                <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid">
+            </button>
+            <button class="bubble-emotions btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
+                <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid">
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock content %}
