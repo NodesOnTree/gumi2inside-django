@@ -5,6 +5,7 @@ class Article(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    visited_count = models.IntegerField()
 
 class Comment(models.Model):
     content = models.TextField()

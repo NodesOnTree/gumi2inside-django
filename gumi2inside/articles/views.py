@@ -38,6 +38,8 @@ def detail(request, pk):
     new_datetime+=str(time)[0:11]
     new_datetime+=str(time)[11:16]
     comments = article.comment_set.all()
+    article.visited_count += 1
+    article.save()
     context = {
         "pk": pk,
         "title": article.title,
@@ -45,6 +47,7 @@ def detail(request, pk):
         "new_datetime": new_datetime,
         "comments": comments,
         "comments_count": len(comments),
+        "visited_count": article.visited_count,
     }
     
     return render(request, "articles/detail.html", context)
