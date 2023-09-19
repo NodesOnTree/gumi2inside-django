@@ -131,3 +131,20 @@ STATICFILES_DIRS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+CSRF_TRUSTED_ORIGINS = ['gumi2inside.site']
+
+# 일단 비활성화
+# CSRF_COOKIE_SECURE = True  # CSRF 쿠키는 HTTPS를 통해서만 전송됩니다.
+# CSRF_COOKIE_HTTPONLY = True  # 자바스크립트에서 CSRF 쿠키에 접근할 수 없습니다.
+# DEBUG = False
+
+# GPT 말
+# CSRF_COOKIE_SECURE:
+# 이 설정을 True로 하면, CSRF 쿠키는 HTTPS를 통해서만 전송됩니다. 즉, 암호화되지 않은 HTTP 연결을 통해서는 쿠키가 전송되지 않게 됩니다. 이렇게 하면 중간자 공격(man-in-the-middle attacks)을 통한 쿠키 탈취를 어렵게 만듭니다.
+# 만약 당신의 웹사이트가 HTTPS를 지원한다면 이 설정을 활성화하는 것이 좋습니다.
+
+# CSRF_COOKIE_HTTPONLY:
+# 이 설정을 True로 하면, 자바스크립트를 통해 CSRF 쿠키에 접근하는 것이 불가능해집니다. 이는 크로스 사이트 스크립팅 공격(XSS attacks)을 통해 쿠키가 탈취되는 것을 방지하는 데 도움을 줍니다.
+# 웹사이트에 자바스크립트를 통해 CSRF 쿠키에 접근할 필요가 없다면 이 설정을 활성화하는 것이 좋습니다.
+
