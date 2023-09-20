@@ -64,6 +64,5 @@ def view_bubbles():
     
     sorted_bubbles.sort(reverse=True)
     
-    print(sorted_bubbles)
 
     return sorted_bubbles
