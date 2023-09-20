@@ -132,7 +132,7 @@ STATICFILES_DIRS=[
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CSRF_TRUSTED_ORIGINS = ['gumi2inside.site']
+CSRF_TRUSTED_ORIGINS = ['https://gumi2inside.site']
 
 # 일단 비활성화
 # CSRF_COOKIE_SECURE = True  # CSRF 쿠키는 HTTPS를 통해서만 전송됩니다.
