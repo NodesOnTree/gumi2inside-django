@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block style %}
 .bg_top_2{
   width: 100%;
@@ -21,13 +22,13 @@
 <div class='bg_top_2'>
   <div class="container mt-5 mb-3">
     <div>
-      <strong>제목 : {{ title }}</strong>
+      <strong> {{ title }}</strong>
       <span style="float: right;">작성시간 : {{ new_datetime }}</span>
       <div style="clear: both;"></div>
       <hr>
     </div>
       <div>
-        <p> 내용 : {{ content|linebreaks }}</p>
+        <p> {{ content|linebreaks|urlize|safe}}</p>
       </div>
       <hr>
     <p>조회수 : {{visited_count}} </p>
@@ -43,7 +44,7 @@
   {% for comment in comments %}
     <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
       <div class="mb-3">{{comment.created_at}}</div>
-      <div class="bt-2 mx-5">{{comment.content}} </div>
+      <div class="bt-2 mx-5">{{comment.content|urlize|safe}} </div>
     </div>  
   {% endfor %}
   
