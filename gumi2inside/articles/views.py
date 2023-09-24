@@ -24,7 +24,6 @@ def comment(request, pk):
     comment = Comment(content=content)
     comment.origin_article = Article.objects.get(pk=pk)
     comment.save()
-    print("?D?D?")
     return redirect(reverse('articles:detail', kwargs={'pk': pk}))
 
 def complete(request):
@@ -48,6 +47,8 @@ def detail(request, pk):
         "comments": comments,
         "comments_count": len(comments),
         "visited_count": article.visited_count,
+        "textsize" : article.textsize,
+        "textcolor" : article.textcolor,
     }
     
     return render(request, "articles/detail.html", context)

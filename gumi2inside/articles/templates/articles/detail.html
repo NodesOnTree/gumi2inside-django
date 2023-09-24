@@ -28,7 +28,8 @@
       <hr>
     </div>
       <div>
-        <p> {{ content|linebreaks|urlize|safe}}</p>
+        <!--여기에 클래스 추가-->
+        <p style="color : {{textcolor}}; font-size : {{textsize}}px" > {{content}}</p>
       </div>
       <hr>
     <p>조회수 : {{visited_count}} </p>

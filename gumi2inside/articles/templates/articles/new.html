@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block style %}
 .div {
   width: 100%;
@@ -14,7 +14,6 @@
 .my-hr2 {
   border: 2;
   height: 2px;
-
 }
 .btn1{
   background-color:#8c99a8;
@@ -45,10 +44,43 @@
       <div class="mx-3">
         <textarea name="content" placeholder=" 내용" id="content" cols="30" rows="16" style="width: 100%;"></textarea>
       </div>
+      {% comment %}  {% endcomment %}
+      <div class="mx-3 d-flex">
+        <div class="form-group text-center" >
+          <label for="textsize">글 크기</label>
+          <select class="form-control text-center" style="width:70px" id="textsize" name="textsize">
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+              <option value="30">30</option>
+              <option value="34">34</option>
+              <option value="48">48</option>
+              <option value="60">60</option>
+              <option value="72">72</option>
+          </select>
+      </div>
+      <div class="form-group text-center mx-4">
+          <label for="textcolor">글 색상</label>
+            <select class="input-group form-control text-center" style="width:80px" name="textcolor" id="textcolor" onchange="backgroundCh();">
+              <option value="black"> 검은색 </option>
+              <option value="red"> 빨강색 </option>
+              <option value="blue"> 파랑색 </option>
+            </select>
+      </div>
+      </div>
+      {% comment %}  {% endcomment %}
       <div class="d-grid gap-2 mx-3 mt-2">
         <input class="btn btn1" type="submit" value="제출"></input>
       </div>
     </form>
   </div>
   </div>
+
+  <!-- 이 밑에서 작업해야 할듯 함 -->
+  <script>
+    var backgroundCh = function () {
+        var sel = document.getElementById('textcolor');
+        sel.style.backgroundColor = sel.value;
+    };
+  </script>
 {% endblock content %}
