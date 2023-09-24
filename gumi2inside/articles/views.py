@@ -28,7 +28,7 @@ def comment(request, pk):
     return redirect(reverse('articles:detail', kwargs={'pk': pk}))
 
 def complete(request):
-    return redirect("articles:list")
+    return redirect("articles:articles_list")
 
 
 def detail(request, pk):
@@ -53,7 +53,7 @@ def detail(request, pk):
     return render(request, "articles/detail.html", context)
 
 
-def list(request):
+def articles_list(request):
     articles = Article.objects.order_by('-id')
    
     datetime_gaps=[]
@@ -108,7 +108,7 @@ def list(request):
         'article_contents':article_contents,
 
     }
-    return render(request, "articles/list.html", context)
+    return render(request, "articles/articles_list.html", context)
 
 
 
@@ -116,4 +116,4 @@ def list(request):
 def delete(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
-    return redirect("articles:list")
+    return redirect("articles:articles_list")
