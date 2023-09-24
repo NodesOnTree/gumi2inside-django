@@ -15,7 +15,9 @@ def new(request):
 def create(request):
     title = request.POST.get("title")
     content = request.POST.get("content")
-    article = Article(title=title, content=content, visited_count = 0)
+    textsize = request.POST.get("textsize")
+    textcolor = request.POST.get("textcolor")
+    article = Article(textsize=textsize, textcolor=textcolor,title=title, content=content, visited_count = 0)
     article.save()
     return render(request, "articles/complete.html")
 
