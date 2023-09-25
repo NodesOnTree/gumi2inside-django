@@ -62,9 +62,15 @@
       <div class="form-group text-center mx-4">
           <label for="textcolor">글 색상</label>
             <select class="input-group form-control text-center" style="width:80px" name="textcolor" id="textcolor" onchange="backgroundCh();">
-              <option value="black"> 검은색 </option>
-              <option value="red"> 빨강색 </option>
-              <option value="blue"> 파랑색 </option>
+              <option value="black">검은색</option>
+              <option value="red">빨간색</option>
+              <option value="blue">파란색</option>
+              <option value="green">초록색</option>
+              <option value="yellow">노란색</option>
+              <option value="orange">주황색</option>
+              <option value="purple">보라색</option>
+              <option value="pink">분홍색</option>
+              <option value="gray">회색</option>
             </select>
       </div>
       </div>
@@ -80,7 +86,7 @@
   <script>
     var backgroundCh = function () {
         var sel = document.getElementById('textcolor');
-        sel.style.backgroundColor = sel.value;
-    };
-  </script>
-{% endblock content %}
+        //sel.style.backgroundColor = sel.value;
+      };
+    </script>
+    {% endblock content %}
