@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load custom_tag %}
 {% block style %}
 .bg_top_2{
   width: 100%;
@@ -29,7 +30,7 @@
     </div>
       <div>
         <!--여기에 클래스 추가-->
-        <p style="color : {{textcolor|safe}}; font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe}}</p>
+        <p style="color : {{textcolor|safe}}; font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
       </div>
       <hr>
     <p>조회수 : {{visited_count}} </p>
@@ -45,7 +46,7 @@
   {% for comment in comments %}
     <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
       <div class="mb-3">{{comment.created_at}}</div>
-      <div class="bt-2 mx-5">{{comment.content|urlize|safe}} </div>
+      <div class="bt-2 mx-5" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
     </div>  
   {% endfor %}
   
