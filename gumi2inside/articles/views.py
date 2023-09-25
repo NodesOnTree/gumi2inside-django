@@ -16,8 +16,11 @@ def create(request):
     title = request.POST.get("title")
     content = request.POST.get("content")
     textsize = request.POST.get("textsize")
-    textcolor = request.POST.get("textcolor")
-    article = Article(textsize=textsize, textcolor=textcolor,title=title, content=content, visited_count = 0)
+    red = request.POST.get("red")
+    green = request.POST.get("green")
+    blue = request.POST.get("blue")
+    print(red,green,blue)
+    article = Article(textsize=textsize, red=red, green=green, blue=blue,title=title, content=content, visited_count = 0)
     article.save()
     return render(request, "articles/complete.html")
 
@@ -50,7 +53,9 @@ def detail(request, pk):
         "comments_count": len(comments),
         "visited_count": article.visited_count,
         "textsize" : article.textsize,
-        "textcolor" : article.textcolor,
+        "red" : article.red,
+        "green" : article.green,
+        "blue" : article.blue,
     }
     
     return render(request, "articles/detail.html", context)

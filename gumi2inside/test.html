@@ -1,13 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RGB 컬러 피커</title>
+</head>
 <body>
-    <div class="container">
-        <h1 class="my-4">게시판 글 목록</h1>
-        <div class="post-list">
-            <div class="post-card">
-                <h2 class="post-title">게시글 제목 1</h2>
-                <p class="post-timestamp">작성일: 2023-09-17</p>
-            </div>
-        </div>
+    <div>
+        <label for="red">Red:</label>
+        <input type="range" id="red" min="0" max="255" value="0">
+        <span id="redValue">0</span>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <div>
+        <label for="green">Green:</label>
+        <input type="range" id="green" min="0" max="255" value="0">
+        <span id="greenValue">0</span>
+    </div>
+
+    <div>
+        <label for="blue">Blue:</label>
+        <input type="range" id="blue" min="0" max="255" value="0">
+        <span id="blueValue">0</span>
+    </div>
+
+    <div>
+        <h2>선택한 RGB 색상:</h2>
+        <div id="colorDisplay" style="width: 100px; height: 100px;"></div>
+    </div>
+
+    <script>
+        const redSlider = document.getElementById("red");
+        const greenSlider = document.getElementById("green");
+        const blueSlider = document.getElementById("blue");
+        const redValue = document.getElementById("redValue");
+        const greenValue = document.getElementById("greenValue");
+        const blueValue = document.getElementById("blueValue");
+        const colorDisplay = document.getElementById("colorDisplay");
+
+        redSlider.addEventListener("input", updateColor);
+        greenSlider.addEventListener("input", updateColor);
+        blueSlider.addEventListener("input", updateColor);
+
+        function updateColor() {
+            const red = redSlider.value;
+            const green = greenSlider.value;
+            const blue = blueSlider.value;
+
+            redValue.textContent = red;
+            greenValue.textContent = green;
+            blueValue.textContent = blue;
+
+            const rgbColor = `rgb(${red},${green},${blue})`;
+            colorDisplay.style.backgroundColor = rgbColor;
+        }
+    </script>
 </body>
+</html>

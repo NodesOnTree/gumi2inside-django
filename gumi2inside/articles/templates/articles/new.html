@@ -46,9 +46,9 @@
       </div>
       {% comment %}  {% endcomment %}
       <div class="mx-3 d-flex">
-        <div class="form-group text-center" >
-          <label for="textsize">글 크기</label>
-          <select class="form-control text-center" style="width:70px" id="textsize" name="textsize">
+        <div class="form-group text-center d-flex justify-content-center align-items-center" >
+          <label for="textsize" class="me-3">글 크기</label>
+          <select class="form-control text-center p-0" style="width:50px; height:40px;" id="textsize" name="textsize">
               <option value="16">16</option>
               <option value="20">20</option>
               <option value="24">24</option>
@@ -59,19 +59,29 @@
               <option value="72">72</option>
           </select>
       </div>
-      <div class="form-group text-center mx-4">
-          <label for="textcolor">글 색상</label>
-            <select class="input-group form-control text-center" style="width:80px" name="textcolor" id="textcolor" onchange="backgroundCh();">
-              <option value="black">검은색</option>
-              <option value="red">빨간색</option>
-              <option value="blue">파란색</option>
-              <option value="green">초록색</option>
-              <option value="yellow">노란색</option>
-              <option value="orange">주황색</option>
-              <option value="purple">보라색</option>
-              <option value="pink">분홍색</option>
-              <option value="gray">회색</option>
-            </select>
+      <div class="form-group text-center mx-4 d-flex justify-content-center align-items-center">
+          <div class="mx-3">
+              <label for="red">Red:</label>
+              <input type="range" id="red" name="red" min="0" max="255" value="0">
+              <span id="redValue">0</span>
+          </div>
+  
+          <div class="mx-3">
+              <label for="green">Green:</label>
+              <input type="range" id="green" name="green" min="0" max="255" value="0">
+              <span id="greenValue">0</span>
+          </div>
+  
+          <div class="mx-3">
+              <label for="blue">Blue:</label>
+              <input type="range" id="blue" name="blue" min="0" max="255" value="0">
+              <span id="blueValue">0</span>
+          </div>
+  
+      <!-- 선택한 RGB 색상 표시 칸 -->
+      <div>
+          <div id="colorDisplay"  class="mx-3" style="width: 30px; height: 30px; border: 1px solid #000;"></div>
+      </div>
       </div>
       </div>
       {% comment %}  {% endcomment %}
@@ -88,5 +98,30 @@
         var sel = document.getElementById('textcolor');
         //sel.style.backgroundColor = sel.value;
       };
+
+    const redSlider = document.getElementById("red");
+    const greenSlider = document.getElementById("green");
+    const blueSlider = document.getElementById("blue");
+    const redValue = document.getElementById("redValue");
+    const greenValue = document.getElementById("greenValue");
+    const blueValue = document.getElementById("blueValue");
+    const colorDisplay = document.getElementById("colorDisplay");
+
+    redSlider.addEventListener("input", updateColor);
+    greenSlider.addEventListener("input", updateColor);
+    blueSlider.addEventListener("input", updateColor);
+
+    function updateColor() {
+        const red = redSlider.value;
+        const green = greenSlider.value;
+        const blue = blueSlider.value;
+
+        redValue.textContent = red;
+        greenValue.textContent = green;
+        blueValue.textContent = blue;
+
+        const rgbColor = `rgb(${red},${green},${blue})`;
+        colorDisplay.style.backgroundColor = rgbColor;
+    }
     </script>
     {% endblock content %}

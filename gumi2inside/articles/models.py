@@ -4,8 +4,10 @@ from django.db import models
 class Article(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
-    textcolor = models.TextField()
     textsize = models.TextField()
+    red = models.TextField()
+    green = models.TextField()
+    blue = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     visited_count = models.IntegerField()
 
