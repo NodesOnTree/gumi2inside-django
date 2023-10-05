@@ -8,6 +8,7 @@ class Article(models.Model):
     red = models.TextField()
     green = models.TextField()
     blue = models.TextField()
+    image = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     visited_count = models.IntegerField()
 

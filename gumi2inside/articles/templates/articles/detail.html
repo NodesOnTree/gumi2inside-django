@@ -28,6 +28,9 @@
       <div style="clear: both;"></div>
       <hr>
     </div>
+      {% if image %}
+        <img src="{{ image.url }}" alt="image"> 
+      {% endif %}
       <div>
         <!--여기에 클래스 추가-->
         <p style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
