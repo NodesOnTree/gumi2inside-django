@@ -1,3 +1,8 @@
+from django.urls import path
+from . import views
 
-path('signup/', views.signup, name='signup')
-path('delete/', views.delete, name='delete')
+app_name = 'accounts'
+urlpatterns=[
+    path('signup/', views.signup, name='signup')
+    path('delete/', views.delete, name='delete')
+]
