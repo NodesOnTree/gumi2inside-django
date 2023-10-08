@@ -1,60 +1,36 @@
 {% load static %}
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" >
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>구미2반 커뮤니티!</title>
+    <title>공지사항!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {% comment %} <link rel="stylesheet" href="style.css"> {% endcomment %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <style>
       .bg_top{
         width: 100%;
-        height: 100%;
-        background-color: #ffef6b;
-        position: absoulte ;
-        top: 0;
+        height: 100%
+        position : static;
+        background-color : rgb(205, 226, 243);
+        top : 0;
         margin: 0;
-       
       }
       .card.border-light {
         border-color: white;
       }
-      .bg_top_2{
-          width: 100%;
-          
-          background-color: white;
-          position: absoulte ;
-          top: 0;
-          margin: 0;
-        }
-      .bg_card{
-          background-image: url("{%static 'card_bg2.png'%}");
-          background-repeat: no-repeat;
-          background-size : 100% 100% ;
-          height: auto;
-      }
-      .border1{
-              border: 2px black solid;
-      }
-      .imagesize{
-          height: 300px;
-          width: 300px;
-          margin-top: 0px;
-          
-      }
-      footer{
-        display: inline;
-      }
-      .right{
+      .bg{
+        padding-bottom : 70px;
+        border : none;
+        border-bottom : black 1px solid rgba(0, 0, 0, 0.);
         
       }
+
     </style>
   </head>
   <body>
     <!-- 네비게이터 -->
-    
         <header class=" border-bottom fixed-top">
              
             <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -84,42 +60,22 @@
             </nav>
             
         </header>
-        
-    
     <!-- 네비게이터 -->
     <div class= "bg_top">
-      <div class='container ' style="padding-left: 100px; padding-top: 55px; padding-right: 100px; ">
-        <div class="row bg-white">
-    
-          {% for title, date_gap,pk, content in temp%}
-          <div  class="container col-md-12 ">
-            <div class="row">
-              <form method="POST" action="{% url 'articles:detail' pk%}">
-                {% csrf_token %}
-                <div class="col-md-6 offset-3 ">
-                  <div class="card text-black mt-5">
-                    <button class="btn btn-outline-none" type='submit'>
-                      <div class="card-title"><span class='px-2' style='float: left; font-size: 1.8rem;'>{{title}}</span>
-                        <span style='float: right;' class="text-muted">{{date_gap}}</span>
-                      </div>   
-                      <br>
-                      <br>
-                            
-                      <p class="card-text px-3" style='float: left;font-size: 1.2rem'>{{content}}</p>
-                    </button>   
-                  </div>
-                </div>
-              </form>
-              {% endfor %}
-
+      <div class='container ' style=" padding-top: 100px;">
+          {% for announce in announces reversed %}
+            <div class="bg">
+            <p style = "text-align : center; font-size : 30px; font-weight : bold;" >{{announce.title}}</p>
+            <p style = "text-align : left; font-size : 17px; color : gray">{{announce.created_at}}</p>
+            <p style = "font-size : 22px;">{{announce.content}}</p>
             </div>
+            <hr>
+        {% endfor %}
           </div>
         </div>
       </div>
     </div>
-    
-    <a href="{% url 'articles:new' %}" style="float: right;"><img src="{% static 'gcova.png' %}" class='imagesize fixed-bottom'></a>
-    
+        
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>

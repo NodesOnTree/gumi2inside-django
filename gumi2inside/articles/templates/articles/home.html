@@ -12,11 +12,21 @@
 }
 
 .home_html_box{
-  background-color :white;
+  background-color : white;
   height: 30px;
 	width: 100px;
 }
-
+.announcement_atag{
+  width:100%;
+  height:550px;
+  text-align: center
+}
+.atag{
+  text-decoration-line: none;
+  color : black;
+  font-size: 23px;
+  font-weight : bold
+}
 
 {% endblock style %}
 
@@ -26,7 +36,7 @@
 
     <div class="home_html_write_at d-flex flex-column justify-content-center">
 
-      <div class="d-flex justify-content-center m-5">
+      <div class="d-flex justify-content-center m-4">
         <div class="d-flex flex-column">
           <h1 class="fw-bold h1 lh-lg">안녕하세요</h1>
           <h1 class="fw-bold h2 lh-sm">구미 2반 귀요미들 입니다.</h1>
@@ -41,7 +51,8 @@
       </div>
       
       {% comment %} 카로쉘 {% endcomment %}
-        <div class="home_html_write_at m-5 border border-white border-5 bg-light">
+        <div class="announcement_atag m-5 border border-white border-5 bg-light">
+          <a class="atag" href="{% url "announcements:announcement"%}">{{announce.title}}</a>
           <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -49,16 +60,16 @@
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
           <div class="carousel-inner">
-            <div class="carousel-item active d-flex flex-column" style="min-height:550px; max-height:550px; margin-top:60px;">
-              <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-item active">
+                <img src="{% static 'home_img.jpeg' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{% static 'caro2.png' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'seating.png' %}" class="d-block w-100" alt="...">
             </div>
-            <div class="carousel-item" style="min-height:550px; max-height:550px; margin-top:27px; margin-bottom:10px;">
-              <img src="{% static 'caro3.png' %}" class="d-block w-100" alt="...">
+            <div class="carousel-item">
+                <img src="{% static 'curriculum.PNG' %}" class="d-block w-100" alt="...">
             </div>
-          </div>
+        </div>        
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
