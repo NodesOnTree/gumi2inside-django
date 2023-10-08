@@ -6,18 +6,19 @@ from .forms import CustomUserChangeForm
 from django.shortcuts import get_object_or_404
 from .models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
+
+
+
 # Create your views here.
 
 def login(request):
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
+        next_url = request.GET.get('next')
         if form.is_valid():
-            auth_login(request, form.get_user())
-            next = request.GET.get('next')
-            if next:
-                return redirect(next)
-            else:
-                return redirect('home')
+            auth_login(request,form.get_user())
+            return redirect( next_url or 'home')
     else:
         form = AuthenticationForm()
     context = {
