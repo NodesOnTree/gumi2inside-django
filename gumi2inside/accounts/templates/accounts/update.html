@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+    /* 여기에 추가적인 CSS 스타일을 정의하세요 */
+
+    /* 노란색 배경의 높이를 조절하여 노란색 배경과 겹치지 않게 합니다. */
+    .bg_top {
+        height: 200px; /* 원하는 높이로 조절하세요 */
+    }
+
+    /* 카드를 가운데 정렬하고 크기를 조절합니다. */
+    .custom-card {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: #fff; /* 카드 배경색 설정 */
+        padding: 0px; /* 카드 내용과의 간격 설정 */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 카드 그림자 추가 (선택 사항) */
+        position: relative; /* 카드를 상대적으로 위치시킴 */
+        top: 60px; /* 카드를 위로 이동하여 노란 배경과 겹치지 않게 함 */
+    }
+
+    .card-header {
+        {% comment %} background-color:  #f0f0f0;        {% endcomment %}
+        color: black;
+    }
+
+    /* 필요한 다른 스타일을 추가하세요 */
+</style>
+{% endblock style %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card custom-card"> <!-- "custom-card" 클래스 추가 -->
+                <div class="card-header">
+                    <h1 class="text-center">회원정보 수정</h1>
+                </div>
+                <div class="card-body m-5">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="id_first_name" class="form-label">이름:</label>
+                          <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{ user.first_name }}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="id_last_name" class="form-label">별명:</label>
+                        <input type="text" name="last_name" id="id_last_name" class="form-control" value="{{ user.last_name }}">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="id_email" class="form-label">메일:</label>
+                      <input type="email" name="email" id="id_email" class="form-control" value="{{ user.email }}">
+                  </div>
+
+                        <div class="d-flex justify-content-between">
+                          <button type="submit" class="btn " style="background-color: #87CEEB; color: white;">변경</button>
+                            <a href="{% url 'accounts:change_password' %}" class="btn btn-secondary" style="background-color: #87CEEB; color: white;">비밀번호 변경</a>
+                        </div>
+                    </form>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

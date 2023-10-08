@@ -3,6 +3,8 @@ from django.urls import reverse
 from .models import Article, Comment
 from datetime import datetime
 from announcements.models import announcement
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def home(request):
     announcements = announcement.objects.order_by('-id')
@@ -14,11 +16,11 @@ def home(request):
     }    
     return render(request, "articles/home.html", context)
 
-
+@login_required
 def new(request):
     return render(request, "articles/new.html")
 
-
+@login_required
 def create(request):
     title = request.POST.get("title")
     content = request.POST.get("content")
@@ -30,14 +32,14 @@ def create(request):
     article = Article(textsize=textsize, red=red, green=green, blue=blue,title=title, content=content, visited_count = 0)
     article.save()
     return render(request, "articles/complete.html")
-
+@login_required
 def comment(request, pk):
     content = request.POST.get("comment")
     comment = Comment(content=content)
     comment.origin_article = Article.objects.get(pk=pk)
     comment.save()
     return redirect(reverse('articles:detail', kwargs={'pk': pk}))
-
+@login_required
 def complete(request):
     return redirect("articles:articles_list")
 
@@ -209,7 +211,7 @@ def articles_list(request):
 
 
 
-
+@login_required
 def delete(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
