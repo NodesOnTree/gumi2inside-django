@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
 
@@ -9,13 +10,10 @@ from .forms import CustomUserCreationForm
 def login(request):
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
+        next_url = request.GET.get('next')
         if form.is_valid():
-            auth_login(request, form.get_user())
-            next = request.GET.get('next')
-            if next:
-                return redirect(next)
-            else:
-                return redirect('home')
+            auth_login(request,form.get_user())
+            return redirect( next_url or 'home')
     else:
         form = AuthenticationForm()
     context = {
