@@ -7,10 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
-
-
-
-# Create your views here.
+from .forms import CustomUserCreationForm
 
 def login(request):
     if request.method == "POST":
@@ -30,11 +27,6 @@ def logout(request):
     auth_logout(request)
     return redirect('home') 
 
-def signup(request):
-    pass
-@login_required
-def delete(request):
-    pass
 @login_required
 def update(request):
 
@@ -65,3 +57,29 @@ def change_password(request):
      
     }
     return render(request, 'accounts/change_password.html', context)
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            print(request.POST.get('first_name'))
+            print(request.POST.get('last_name'))
+            print("POST 데이터:", request.POST)
+            print("클린 데이터:", form.cleaned_data)
+            print("first_name:", form.cleaned_data.get('first_name'))
+            print("last_name:", form.cleaned_data.get('last_name'))
+            
+            form.save()
+            return redirect('/')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form':form,
+    }
+    return render(request, 'accounts/signup.html', context)
+@login_required
+def delete(request):
+    request.user.delete()
+    return redirect('/')
+
