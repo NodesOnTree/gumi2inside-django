@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-54-180-115-105.ap-northeast-2.compute.amazonaws.com',
                  'gumi2inside.site',
-                 'localhost',]
+                 'localhost','*']
 
 
 # Application definition

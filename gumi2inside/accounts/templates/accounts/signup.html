@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .mb-3 {
+    margin-bottom: 1.5rem;
+  }
+
+  .btn1{
+    background-color:#8c99a8;
+    color:white;
+  }
+  
+  .btn1:hover {
+    background-color:#3396f4;
+    color:white;
+  }  
+</style>
+{% endblock style %}
+
+{% block content %}
+<div class="container pt-3">
+    <div class="div bg-light border py-3 shadow-lg">
+    <h2 class="m-3" style="text-align:center;"><strong>회원가입</strong></h2>
+    <hr class="mx-3">
+    <form action="{% url "accounts:signup" %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3 mx-3">
+            <input type="text" class="form-control" placeholder="아이디" name="username" maxlength="24" autocapitalize="none" autocomplete="username" autofocus required id="id_username">
+            <span class="form-text mx-1">※ 24자 이하 문자, 숫자, @/./+/-/_만 가능</span>
+        </div>
+        <div class="mb-3 mx-3">
+            <input type="text" class="form-control" placeholder="이름" name="first_name" id="id_first_name">
+        </div>
+        <div class="mb-3 mx-3">
+            <input type="text" class="form-control" placeholder="닉네임" name="last_name" id="id_last_name">
+        </div>
+        <div class="mb-3 mx-3">
+            <input type="password" class="form-control" placeholder="비밀번호" name="password1" autocomplete="new-password" required id="id_password1">
+        </div>
+        <div class="mb-3 mx-3">
+            <input type="password" class="form-control" placeholder="비밀번호 확인" name="password2" autocomplete="new-password" required id="id_password2">
+        </div>
+        <div class="mb-3 mx-3">
+            <span class="mx-1">※ 다음과 같은 비밀번호는 사용할 수 없습니다:</span>
+            <ul>
+                <li>아이디와 유사함</li>
+                <li>8자 미만</li>
+                <li>통상적으로 자주 사용됨</li>
+                <li>숫자로만 이루어짐</li>
+            </ul>
+        </div>
+        <div class="d-grid gap-2 mx-3 mt-2">
+            <input class="btn btn1" type="submit" value="회원가입" id="signupButton"></input>
+          </div>
+    </form>
+    </div>
+</div>
+{% endblock content %}

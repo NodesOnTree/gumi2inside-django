@@ -57,6 +57,14 @@
                           <input type="submit" value="로그아웃" class="nav-link fw-bold" style="color: #8a2be2;">
                         </form>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'accounts:signup' %}?next={{ request.path }}">회원가입</a>
+                        </form>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'accounts:delete' %}?next={{ request.path }}">회원탈퇴</a>
+                        </form>
+                      </li>
                   </ul>
                 
               </div>
