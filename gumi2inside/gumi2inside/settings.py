@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['ec2-54-180-115-105.ap-northeast-2.compute.amazonaws.com',
 INSTALLED_APPS = [
     'articles',
     'ciders',
+    'accounts',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -149,3 +150,4 @@ CSRF_TRUSTED_ORIGINS = ['https://gumi2inside.site']
 # 이 설정을 True로 하면, 자바스크립트를 통해 CSRF 쿠키에 접근하는 것이 불가능해집니다. 이는 크로스 사이트 스크립팅 공격(XSS attacks)을 통해 쿠키가 탈취되는 것을 방지하는 데 도움을 줍니다.
 # 웹사이트에 자바스크립트를 통해 CSRF 쿠키에 접근할 필요가 없다면 이 설정을 활성화하는 것이 좋습니다.
 
+AUTH_USER_MODEL = 'accounts.User'
