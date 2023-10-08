@@ -77,6 +77,15 @@
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
                             </li> 
+                            <li class="nav-item">
+                              <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'accounts:login' %}?next={{ request.path }}">로그인</a>
+                            </li> 
+                            <li class="nav-item">
+                              <form action="{% url "accounts:logout" %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="로그아웃" class="nav-link fw-bold" style="color: #8a2be2;">
+                              </form>
+                            </li>
                         </ul>
                         
                     </div>
