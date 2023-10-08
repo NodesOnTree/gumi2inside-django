@@ -24,4 +24,5 @@ urlpatterns = [
     path('articles/', include('articles.urls')),
     path('ciders/', include('ciders.urls')),
     path('', views.home, name="home"),
+
 ]
