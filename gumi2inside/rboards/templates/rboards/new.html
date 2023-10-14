@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+.div {
+  width: 100%;
+}
+
+.input1{
+  border: 2px solid black
+  border-radius : 5px;
+  background-color: #ffef6b;
+}
+
+.my-hr2 {
+  border: 2;
+  height: 2px;
+}
+.btn1{
+  background-color:#8c99a8;
+  color:white;
+}
+
+.btn1:hover {
+  background-color:#3396f4;
+  color:white;
+}  
+
+{% endblock style %}
+
+{% block content %}
+<div class="container pt-3">
+  <div class="div bg-light border py-3 shadow-lg">
+    <div>
+    <h2 class="m-3" style="text-align:center;"><strong>글쓰기</strong></strong></h2>
+    </div>
+    <hr class="mx-3 my-hr2">
+    <form action="{% url "rboards:create" %}" method="POST">
+      {% csrf_token %}  <!--POST 요청시 필요한 요소-->
+      <div class="mx-3">
+        <input type="text" placeholder=" 제목" id="title" name="title" style="width: 100%;"> 
+      </div>
+      <p></p>
+      <hr class="mx-3 my-hr2">
+      <div class="mx-3">
+        <textarea name="content" placeholder=" 내용" id="content" cols="30" rows="16" style="width: 100%;"></textarea>
+      </div>
+      {% comment %}  {% endcomment %}
+      <div class="mx-3 d-flex">
+        <div class="form-group text-center d-flex justify-content-center align-items-center" >
+          <label for="textsize" class="me-3">글 크기</label>
+          <select class="form-control text-center p-0" style="width:50px; height:40px;" id="textsize" name="textsize">
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+              <option value="30">30</option>
+              <option value="34">34</option>
+              <option value="48">48</option>
+              <option value="60">60</option>
+              <option value="72">72</option>
+          </select>
+      </div>
+      <div class="form-group text-center mx-4 d-flex justify-content-center align-items-center">
+          <div class="mx-3">
+              <label for="red">Red:</label>
+              <input type="range" id="red" name="red" min="0" max="255" value="0">
+              <span id="redValue">0</span>
+          </div>
+  
+          <div class="mx-3">
+              <label for="green">Green:</label>
+              <input type="range" id="green" name="green" min="0" max="255" value="0">
+              <span id="greenValue">0</span>
+          </div>
+  
+          <div class="mx-3">
+              <label for="blue">Blue:</label>
+              <input type="range" id="blue" name="blue" min="0" max="255" value="0">
+              <span id="blueValue">0</span>
+          </div>
+  
+      <!-- 선택한 RGB 색상 표시 칸 -->
+      <div>
+          <div id="colorDisplay"  class="mx-3" style="width: 30px; height: 30px; border: 1px solid #000;"></div>
+      </div>
+      </div>
+      </div>
+      {% comment %}  {% endcomment %}
+      <div class="d-grid gap-2 mx-3 mt-2">
+        <input class="btn btn1" type="submit" value="제출"></input>
+      </div>
+    </form>
+  </div>
+  </div>
+
+  <!-- 이 밑에서 작업해야 할듯 함 -->
+  <script>
+    var backgroundCh = function () {
+        var sel = document.getElementById('textcolor');
+        //sel.style.backgroundColor = sel.value;
+      };
+
+    const redSlider = document.getElementById("red");
+    const greenSlider = document.getElementById("green");
+    const blueSlider = document.getElementById("blue");
+    const redValue = document.getElementById("redValue");
+    const greenValue = document.getElementById("greenValue");
+    const blueValue = document.getElementById("blueValue");
+    const colorDisplay = document.getElementById("colorDisplay");
+
+    redSlider.addEventListener("input", updateColor);
+    greenSlider.addEventListener("input", updateColor);
+    blueSlider.addEventListener("input", updateColor);
+
+    function updateColor() {
+        const red = redSlider.value;
+        const green = greenSlider.value;
+        const blue = blueSlider.value;
+
+        redValue.textContent = red;
+        greenValue.textContent = green;
+        blueValue.textContent = blue;
+
+        const rgbColor = `rgb(${red},${green},${blue})`;
+        colorDisplay.style.backgroundColor = rgbColor;
+    }
+    </script>
+    {% endblock content %}

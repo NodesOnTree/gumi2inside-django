@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load custom_tag %}
+{% block style %}
+.bg_top_2{
+  width: 100%;
+  height: 330px;
+  background-color: white;
+  position: absoulte ;
+  top: 0;
+  margin: 0;
+}
+.bg-yellow{
+  background-color: #ffe651;
+}
+.bg-realgrey{
+  border: 1px solid lightgrey;
+}
+
+{% endblock style %} 
+
+{% block content %}
+<div class='bg_top_2'>
+  <div class="container mt-5 mb-3">
+    <div>
+      <strong> {{ title }}</strong>
+      <span style="float: right;">작성시간 : {{ new_datetime }}</span>
+      <div style="clear: both;"></div>
+      <hr>
+    </div>
+      {% if image %}
+        <img src="{{ image.url }}" alt="image"> 
+      {% endif %}
+      <div>
+        <!--여기에 클래스 추가-->
+        <p style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
+      </div>
+      <hr>
+    <p>조회수 : {{visited_count}} </p>
+  </div>
+  <div class="container mt-5">
+    <strong>댓글 ({{comments_count}}) </strong>
+    <form action="{% url 'rboards:comment' pk %}" method="POST">
+      {% csrf_token %}
+      <textarea name="comment" id="comment" row="3" style="width: 100%;"></textarea>
+      <input class="btn btn-light btn-lg text-center me-5" type="submit" value="댓글 쓰기">
+    </form>
+  </div>
+  {% for comment in comments %}
+    <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
+      <div class="mb-3">{{comment.created_at}}</div>
+      <div class="bt-2 mx-5" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
+    </div>  
+  {% endfor %}
+  
+
+  <form action="{% url "rboards:delete" pk %}">
+    <input type="submit" value="삭제">
+  </form>
+</div>
+
+{% endblock content %}
