@@ -8,9 +8,12 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     announcements = announcement.objects.order_by('-id')
-    for i in announcements:
-        announce = i
-        break
+    announce = ''
+    # print(a)
+    if announcements.exists():
+        for i in announcements:
+            announce = i
+            break
     context ={
         'announce':announce
     }    
