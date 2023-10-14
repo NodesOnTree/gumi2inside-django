@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'ciders',
     'accounts',
     'storages',
+    'admin_img',
     'rest_framework',
     'django_extensions',
     'django.contrib.admin',

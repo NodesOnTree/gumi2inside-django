@@ -5,6 +5,7 @@ from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
 from img_upload import img_upload,img_view
+from admin_img.models import Carousel
 
 # Create your views here.
 def home(request):
@@ -14,8 +15,14 @@ def home(request):
         for i in announcements:
             announce = i
             break
+    carousel1 = Carousel.objects.get(number=1)
+    carousel2 = Carousel.objects.get(number=2)
+    carousel3 = Carousel.objects.get(number=3)
     context ={
-        'announce':announce
+        'announce' : announce,
+        'carousel1' : carousel1.img_url,
+        'carousel2' : carousel2.img_url,
+        'carousel3' : carousel3.img_url,
     }    
     return render(request, "articles/home.html", context)
 
