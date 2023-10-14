@@ -52,7 +52,11 @@
       
       {% comment %} 카로쉘 {% endcomment %}
         <div class="announcement_atag m-5 border border-white border-5 bg-light">
+          {% if announce %}
           <a class="atag" href="{% url "announcements:announcement"%}">{{announce.title}}</a>
+          {% else %}
+          <a class="atag" href="{% url "announcements:announcement"%}"><span>공지사항</span></a>
+          {% endif %}
           <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
