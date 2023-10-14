@@ -36,7 +36,23 @@
         <p style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
       </div>
       <hr>
-    <p>조회수 : {{visited_count}} </p>
+    <p>조회수 : {{ visited_count }} </p>
+    <div class="row">
+      <div class='col-3 border border-0'>
+        <form method="POST" action="{% url 'articles:like_article' pk %}">
+          {% csrf_token %}
+          <button class='btn btn-primary border border-0' type="submit">👍 좋아요!</button>
+          <span> {{ like_count }} </span>
+        </form>
+      </div>
+      <div class='col-3 border border-0'>
+        <form method="POST" action="{% url 'articles:dislike_article' pk %}">
+          {% csrf_token %}
+          <button class="btn btn-danger" type="submit">👎 싫어요</button>
+          <span> {{ dislike_count }} </span>
+        </form>
+      </div>
+    </div>
   </div>
   <div class="container mt-5">
     <strong>댓글 ({{comments_count}}) </strong>
@@ -48,8 +64,8 @@
   </div>
   {% for comment in comments %}
     <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
-      <div class="mb-3">{{comment.created_at}}</div>
-      <div class="bt-2 mx-5" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
+      <div class="mb-3">{{ comment.created_at }}</div>
+      <div class="bt-2 mx-5" style="white-space: pre-line">{{ comment.content|urlize|safe|target_blank }} </div>
     </div>  
   {% endfor %}
   
