@@ -24,6 +24,6 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('accounts/', include('accounts.urls')),
     path('announcements/', include('announcements.urls')),
-    path('rboards', include('rboards.urls'))
+    path('rboards', include('rboards.urls')),
 
 ]
