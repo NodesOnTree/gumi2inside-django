@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Article, Comment
+from accounts.models import User
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 
 # Create your views here.
 def home(request):
@@ -20,12 +23,11 @@ def home(request):
     return render(request, "articles/home.html", context)
 
 
-@login_required
+
 def new(request):
     return render(request, "articles/new.html")
 
 
-@login_required
 def create(request):
     title = request.POST.get("title")
     content = request.POST.get("content")
@@ -39,7 +41,6 @@ def create(request):
     return render(request, "articles/complete.html")
 
 
-@login_required
 def comment(request, pk):
     content = request.POST.get("comment")
     comment = Comment(content=content, like_count = 0, dislike_count = 0,)
@@ -48,7 +49,7 @@ def comment(request, pk):
     return redirect(reverse('articles:detail', kwargs={'pk': pk}))
 
 
-@login_required
+
 def complete(request):
     return redirect("articles:articles_list")
 
@@ -70,8 +71,8 @@ def detail(request, pk):
         "comments": comments,
         "comments_count": len(comments),
         "visited_count": article.visited_count,
-        "like_count" : article.like_count,
-        "dislike_count" : article.dislike_count,
+        "like" : article.like_count,
+        "dislike" : article.dislike_count,
         "textsize" : article.textsize,
         "red" : article.red,
         "green" : article.green,
@@ -159,29 +160,99 @@ def delete(request, pk):
     return redirect("articles:articles_list")
 
 
+@login_required
 def like_article(request, article_pk):
     article = Article.objects.get(pk=article_pk)
+    user = request.user
+
+    if user in article.liked_users.all():
+        # 이미 좋아요를 누른 경우, 취소 처리
+        article.liked_users.remove(user)
+        article.like_count -= 1
+        article.visited_count -= 1
+        article.save()
+        return redirect('articles:detail', pk=article.pk)
+    
+    if user in article.disliked_users.all():
+        article.disliked_users.remove(user)
+        article.dislike_count -= 1
+    # 좋아요 처리
+    article.liked_users.add(user)
     article.like_count += 1
+    article.visited_count -= 1
     article.save()
     return redirect('articles:detail', pk=article.pk)
 
 
+@login_required
 def dislike_article(request, article_pk):
     article = Article.objects.get(pk=article_pk)
+    user = request.user
+
+    if user in article.disliked_users.all():
+        # 이미 싫어요를 누른 경우, 취소 처리
+        article.disliked_users.remove(user)
+        article.dislike_count -= 1
+        article.visited_count -= 1
+        article.save()
+        return redirect('articles:detail', pk=article.pk)
+    
+    if user in article.liked_users.all():
+        article.liked_users.remove(user)
+        article.like_count -= 1
+    # 싫어요 처리
+    article.disliked_users.add(user)
     article.dislike_count += 1
+    article.visited_count -= 1
     article.save()
     return redirect('articles:detail', pk=article.pk)
 
 
+@login_required
 def like_comment(request, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
-    comment.like_count += 1
+    comment.origin_article
+    user = request.user
+
+    if user in comment.comment_liked_users.all():
+        # 이미 좋아요를 누른 경우, 취소 처리
+        comment.comment_liked_users.remove(user)
+        comment.like_count -= 1
+    else:
+        if user in comment.comment_disliked_users.all():
+            comment.comment_disliked_users.remove(user)
+            comment.dislike_count -= 1
+        # 좋아요 처리
+        comment.comment_liked_users.add(user)
+        comment.like_count += 1
+        
+    article = comment.origin_article
+    article.visited_count -= 1
+    article.save()
     comment.save()
-    return redirect('')
+    return redirect('articles:detail', pk=article.pk)
 
 
+@login_required
 def dislike_comment(request, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
-    comment.dislike_count += 1
+    print(comment.origin_article)
+    user = request.user
+
+    if user in comment.comment_disliked_users.all():
+        # 이미 싫어요를 누른 경우, 취소 처리
+        comment.comment_disliked_users.remove(user)
+        comment.dislike_count -= 1
+    else:
+    
+        if user in comment.comment_liked_users.all():
+            comment.comment_liked_users.remove(user)
+            comment.like_count -= 1
+        # 싫어요 처리
+        comment.comment_disliked_users.add(user)
+        comment.dislike_count += 1
+    article = comment.origin_article
+    article.visited_count -= 1
+    article.save()
     comment.save()
-    return redirect('')
+    return redirect('articles:detail', pk=article.pk)
