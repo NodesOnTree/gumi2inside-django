@@ -34,7 +34,7 @@
     <h2 class="m-3" style="text-align:center;"><strong>글쓰기</strong></strong></h2>
     </div>
     <hr class="mx-3 my-hr2">
-    <form action="{% url "articles:create" %}" method="POST">
+    <form action="{% url "articles:create" %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}  <!--POST 요청시 필요한 요소-->
       <div class="mx-3">
         <input type="text" placeholder=" 제목" id="title" name="title" style="width: 100%;"> 
@@ -45,6 +45,12 @@
         <textarea name="content" placeholder=" 내용" id="content" cols="30" rows="16" style="width: 100%;"></textarea>
       </div>
       {% comment %}  {% endcomment %}
+
+      <div>
+        <input type="file" name="file" accept="image/*">
+      </div>
+
+
       <div class="mx-3 d-flex">
         <div class="form-group text-center d-flex justify-content-center align-items-center" >
           <label for="textsize" class="me-3">글 크기</label>

@@ -4,6 +4,7 @@ from .models import Article, Comment
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
+from img_upload import img_upload,img_view
 
 # Create your views here.
 def home(request):
@@ -31,10 +32,14 @@ def create(request):
     red = request.POST.get("red")
     green = request.POST.get("green")
     blue = request.POST.get("blue")
-    print(red,green,blue)
     article = Article(textsize=textsize, red=red, green=green, blue=blue,title=title, content=content, visited_count = 0)
     article.save()
+    ## 
+    if request.FILES['file']:
+        img_upload(request, article)
     return render(request, "articles/complete.html")
+
+
 @login_required
 def comment(request, pk):
     content = request.POST.get("comment")
@@ -56,6 +61,7 @@ def detail(request, pk):
     comments = article.comment_set.all()
     article.visited_count += 1
     article.save()
+        
     context = {
         "pk": pk,
         "title": article.title,
@@ -69,6 +75,7 @@ def detail(request, pk):
         "green" : article.green,
         "blue" : article.blue,
     }
+    context = img_view(article,context)
     
     return render(request, "articles/detail.html", context)
 
