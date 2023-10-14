@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Article, Comment
+
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     announcements = announcement.objects.order_by('-id')
     announce = ''
-    # print(a)
+    
     if announcements.exists():
         for i in announcements:
             announce = i
@@ -74,7 +74,7 @@ def detail(request, pk):
 
 
 def articles_list(request):
-    articles = Article.objects.order_by('-id')
+    articles = A0.objects.order_by('-id')
     months={'01':31, '02':31+28, '03':31+28+31, '04':31+28+31+30, '05':31+28+31+30+31, '06':31+28+31+30+31+30, '07':31+28+31+30+31+30+31, '08':31+28+31+30+31+30+31+31, '09':31+28+31+30+31+30+31+31+30, '10':31+28+31+30+31+30+31+31+30+31, '11':31+28+31+30+31+30+31+31+30+31+30, '12':31+28+31+30+31+30+31+31+30+31+30+31}
     datetime_gaps=[]
     article_titles=[]
