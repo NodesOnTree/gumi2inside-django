@@ -10,7 +10,6 @@ from img_upload import img_upload,img_view
 def home(request):
     announcements = announcement.objects.order_by('-id')
     announce = ''
-    # print(a)
     if announcements.exists():
         for i in announcements:
             announce = i
