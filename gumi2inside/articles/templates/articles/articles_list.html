@@ -70,8 +70,11 @@
                                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'articles:articles_list' %}">글 목록</a>
+                              <a class="nav-link" href="{% url 'articles:articles_list' %}">익명 게시판</a>
                             </li> 
+                            <li>
+                              <a class="nav-link" href="{% url 'rboards:rboards_list' %}">실명 게시판</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
                             </li> 
