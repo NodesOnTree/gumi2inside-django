@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+
 
 # Create your models here.
 class Rboard(models.Model):
@@ -11,8 +13,13 @@ class Rboard(models.Model):
     image = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     visited_count = models.IntegerField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
 
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     origin_rboard = models.ForeignKey('Rboard', on_delete=models.CASCADE)
+    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+

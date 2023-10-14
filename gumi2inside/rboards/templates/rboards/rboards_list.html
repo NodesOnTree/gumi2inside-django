@@ -9,7 +9,7 @@
 }
 {% endblock style %}
 {% block content %}
-{% for title, date_gap,pk, content in temp%}
+{% for title, date_gap,pk, content, name in temp%}
   <div  class="container col-md-12 ">
     <div class="row">
       <form method="POST" action="{% url 'rboards:detail' pk%}">
@@ -23,6 +23,7 @@
               <br>
               <br>     
               <p class="card-text px-3" style='float: left;font-size: 1.2rem'>{{content}}</p>
+              <span style="float: right;">작성자 : {{ name }}</span>
             </button>   
           </div>
         </div>
