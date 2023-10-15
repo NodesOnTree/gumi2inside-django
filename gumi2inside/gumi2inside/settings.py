@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'articles',
     'ciders',
     'accounts',
+    'common',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Article, Comment
+from common.models import Lunch
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
@@ -9,14 +10,21 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     announcements = announcement.objects.order_by('-id')
     announce = ''
+    
+    a_menu = Lunch.objects.filter(menuCourseType='AA').order_by('-date').first()
+    c_menu = Lunch.objects.filter(menuCourseType='BB').order_by('-date').first()
+    
+
     # print(a)
     if announcements.exists():
         for i in announcements:
             announce = i
             break
     context ={
-        'announce':announce
-    }    
+        'announce':announce,
+        'a_menu':a_menu,
+        'b_menu':c_menu,
+    }
     return render(request, "articles/home.html", context)
 
 @login_required
