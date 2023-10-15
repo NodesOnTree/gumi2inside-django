@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+    /* 여기에 추가적인 CSS 스타일을 정의하세요 */
+    .bg_top {
+        height: 200px;
+    }
+
+    .custom-card {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px; /* 내용과의 간격을 조정 */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        top: 60px;
+        border-radius: 10px; /* 카드 모서리를 둥글게 만듭니다. */
+    }
+
+    .card-header {
+        background-color: #87CEEB; /* 카드 헤더 배경색 설정 */
+        color: white;
+        border-radius: 10px 10px 0 0; /* 상단 모서리만 둥글게 만듭니다. */
+    }
+
+    .card-body {
+        background-color: #f0f0f0; /* 카드 내용 배경색 설정 */
+        border-radius: 0 0 10px 10px; /* 하단 모서리만 둥글게 만듭니다. */
+    }
+
+    /* 선택 사항: 버튼 스타일 수정 */
+    .btn-custom {
+        background-color: #87CEEB;
+        color: white;
+        border: none;
+    }
+
+    /* 선택 사항: 결과 바 스타일 */
+    .progress-bar {
+        margin: 10px 0;
+    }
+    .content-divider {
+      height: 1px;
+      background-color: #ccc; /* 구분선의 색상을 지정합니다. */
+      margin: 20px 0; /* 구분선 위아래 여백을 조절합니다. */
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <h1 class="text-center">{{ poll.title }}</h1>
+                </div>
+                <div class="card-body m-5">
+                    <div>{{ poll.text }}</div>
+                    
+                    <!-- 구분선 추가 -->
+                    <div class="content-divider"></div>
+                    
+                    <form action="{% url 'articles:polls_vote' poll.id %}" method="POST">
+                        {% csrf_token %}
+                        {% for choice in poll.choice_set.all %}
+                        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                        <br>
+                        {% endfor %}
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-custom">투표하기</button>
+                            <a href="{% url 'articles:polls_list' %}" class="btn btn-secondary btn-custom">뒤로가기</a>
+                        </div>
+                    </form>
+                    {% if not poll.user_can_vote %}
+    <div class="">
+        {% for choice in poll.get_result_dict %}
+            <div class="progress-bar bg-lightgray" role="progressbar" style="width: {{ choice.percentage }}%;"
+                aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><b>
+                {{ choice.text|truncatewords:2 }}-{{ choice.percentage|floatformat }}%</b>
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div>   {% if request.user == poll.owner %}
+    {% if poll.active %} <a href="{% url 'articles:polls_end_poll' poll.id %}" data-toggle="tooltip" data-placement="top" title="End Poll"
+    onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-danger btn-sm">투표 종료</i></a>
+{% endif %}  <a href="{% url 'articles:polls_edit' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
+title="Edit Poll"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1" style="float: right;">투표 수정</i></a>
+{% endif %}</div>
+</div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
