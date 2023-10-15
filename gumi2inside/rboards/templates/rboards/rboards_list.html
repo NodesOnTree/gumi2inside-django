@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+.imagesize{
+  height: 300px;
+  width: 300px;
+  margin-top: 0px;
+  
+}
+{% endblock style %}
+{% block content %}
+{% for title, date_gap,pk, content, name, like, len_comments in temp%}
+<div class="container col-12">
+  <div class="row">
+    {% comment %} form {% endcomment %}
+    <div class="col-8 offset-2">
+      <div class="bg-white border border-black border-3 rounded-2 text-black mt-5">
+        <div class='row justify-content-betwwen'>
+          <span class='col-8 col-md-9 row justify-content-start mx-0'>
+            <div class='row justify-content-center'>
+              <a class='col-11 text-start text-truncate fs-3 text-decoration-none text-black' href="{% url 'rboards:detail' pk%}"> {{ title }} </a>
+            </div>
+            <div class='col-12 row justify-content-start mb-2'>
+              <span class='col-4 col-lg-3 col-xl-2 text-end text-body-tertiary border-end'>{{ name }}</span>
+              <span class='col-5 col-lg-6 col-xl-7 text-start text-body-tertiary border-start'>{{ date_gap }}</span>
+            </div>
+          </span>
+          <span class='col-4 col-md-3 row justify-content-end align-items-center mx-0'>
+            <p class='col-9 mb-0 pt-2'>🧡{{ like }}</p>
+            <p class='col-9 mb-1 pb-2'>💬{{ len_comments }}</p>
+          </span>
+        </div>   
+      </div>
+    </div>
+    {% comment %}  {% endcomment %}
+  </div>
+</div>
+{% endfor %}
+
+
+<a href="{% url 'rboards:new' %}" style="float: right;"><img src="{% static 'gcova.png' %}" class='imagesize fixed-bottom '></a>
+{% endblock content %}

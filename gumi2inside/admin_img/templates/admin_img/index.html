@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>여긴 '신'의 공간이다</h1>
+    <hr>
+    <div>
+        <h2>조물조물 사진놀이</h2>
+        <hr>
+
+        <form action="{% url 'admin_img:update_carousel' 1%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div>
+            <p>1번 카로쉘</p>
+            <input type="file" name="file" accept="image/*">
+            <input type="submit" value='서브밋토 컽'>
+        </div>
+        </form>
+        
+        <form action="{% url 'admin_img:update_carousel' 2%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>2번 카로쉘</p>
+                <input type="file" name="file" accept="image/*">
+                <input type="submit" value='서브밋토 컽'>
+            </div>
+        </form>
+        
+        <form action="{% url 'admin_img:update_carousel' 3%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>3번 카로쉘</p>
+                <input type="file" name="file" accept="image/*">
+                <input type="submit" value='서브밋토 컽'>
+                <hr>
+            </div>
+        </form>
+    </div>
+       
+    <form action="{% url 'admin_img:static_img' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <p>정적 이미지-무슨 이미지를 추가하는지 적어주셈</p>
+            <input type="file" name="file" accept="image/*">
+            <input type="text" name="name">
+            <input type="submit" value='서브밋토 컽'>
+        </div>
+    </form>
+    <br>
+
+    </form>
+</body>
+</html>
