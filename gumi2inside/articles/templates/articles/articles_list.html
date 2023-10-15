@@ -54,9 +54,7 @@
   </head>
   <body>
     <!-- 네비게이터 -->
-    
         <header class=" border-bottom fixed-top">
-             
             <nav class="navbar navbar-expand-lg navbar-light bg-white">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{% url 'home' %}">
@@ -72,8 +70,11 @@
                                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'articles:articles_list' %}">글 목록</a>
+                              <a class="nav-link" href="{% url 'articles:articles_list' %}">익명 게시판</a>
                             </li> 
+                            <li>
+                              <a class="nav-link" href="{% url 'rboards:rboards_list' %}">실명 게시판</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
                             </li> 
@@ -118,7 +119,7 @@
       <div class='container ' style="padding-left: 100px; padding-top: 55px; padding-right: 100px; ">
         <div class="row bg-white">
     
-          {% for title, date_gap,pk, content in temp%}
+          {% for title, date_gap,pk, content, like, len_comments in temp%}
           <div  class="container col-md-12 ">
             <div class="row">
               <form method="POST" action="{% url 'articles:detail' pk%}">
@@ -126,13 +127,15 @@
                 <div class="col-md-6 offset-3 ">
                   <div class="card text-black mt-5">
                     <button class="btn btn-outline-none" type='submit'>
-                      <div class="card-title"><span class='px-2' style='float: left; font-size: 1.8rem;'>{{title}}</span>
+                      <div class="card-title">
+                        <span class='px-2' style='float: left; font-size: 1.8rem;'>{{title}}</span>
                         <span style='float: right;' class="text-muted">{{date_gap}}</span>
                       </div>   
                       <br>
                       <br>
-                            
-                      <p class="card-text px-3" style='float: left;font-size: 1.2rem'>{{content}}</p>
+                      <div class='row justify-content-end align-items-center mx-0'>
+                        <p class='col-2 mb-1 pb-2'>💬{{ len_comments }}</p>
+                      </div>
                     </button>   
                   </div>
                 </div>
@@ -145,7 +148,7 @@
       </div>
     </div>
     
-    <a href="{% url 'articles:new' %}" style="float: right;"><img src="{% static 'gcova.png' %}" class='imagesize fixed-bottom'></a>
+    <a href="{% url 'articles:new' %}"><img src="{% static 'gcova.png' %}" class='imagesize fixed-bottom'></a>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>

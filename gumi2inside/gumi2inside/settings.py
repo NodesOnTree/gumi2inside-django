@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'articles',
     'ciders',
     'accounts',
+    'rboards',
+    'storages',
+    'admin_img',
+    'rest_framework',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -152,3 +156,21 @@ CSRF_TRUSTED_ORIGINS = ['https://gumi2inside.site']
 # 웹사이트에 자바스크립트를 통해 CSRF 쿠키에 접근할 필요가 없다면 이 설정을 활성화하는 것이 좋습니다.
 
 AUTH_USER_MODEL = 'accounts.User'
+
+### upload
+AWS_ACCESS_KEY_ID = 'AKIAROL4U6BLURACMOF5'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'gumi2inside'
+AWS_S3_REGION_NAME = 'ap-northeast-2' 
+
+# 정적 파일 및 미디어 파일을 저장할 S3 경로 설정
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_URL_PROTOCOL = 'https'
+
+# 정적 파일 저장 위치 설정
+STATIC_URL = f'{AWS_S3_URL_PROTOCOL}://{AWS_S3_CUSTOM_DOMAIN}/static/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# 미디어 파일 저장 위치 설정
+MEDIA_URL = f'{AWS_S3_URL_PROTOCOL}://{AWS_S3_CUSTOM_DOMAIN}/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
