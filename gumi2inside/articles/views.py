@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Article, Comment
+from common.models import Lunch
 from accounts.models import User
 from datetime import datetime
 from announcements.models import announcement
@@ -13,6 +14,9 @@ from admin_img.models import Carousel
 def home(request):
     announcements = announcement.objects.order_by('-id')
     announce = ''
+    a_menu = Lunch.objects.filter(menuCourseType='AA').order_by('-date').first()
+    c_menu = Lunch.objects.filter(menuCourseType='BB').order_by('-date').first()
+    
     if announcements.exists():
         for i in announcements:
             announce = i
@@ -21,6 +25,9 @@ def home(request):
     carousel2 = Carousel.objects.get(number=2)
     carousel3 = Carousel.objects.get(number=3)
     context ={
+        'announce':announce,
+        'a_menu':a_menu,
+        'b_menu':c_menu,
         'announce' : announce,
         'carousel1' : carousel1.img_url,
         'carousel2' : carousel2.img_url,

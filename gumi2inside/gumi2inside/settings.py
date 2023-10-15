@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'articles',
     'ciders',
     'accounts',
+    'common',
     'rboards',
     'storages',
     'admin_img',
