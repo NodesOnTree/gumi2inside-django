@@ -85,12 +85,17 @@ def rboards_list(request):
     rboard_pks=[]
     rboard_contents=[]
     rboard_name = []
+    rboard_like = []
+    rboard_comments = []
     
     for rboard in rboards:
         time = rboard.created_at
+        comments = rboard.comment_set.all()
+        rboard_comments.append(len(comments))
         rboard_titles.append(rboard.title)
         rboard_pks.append(rboard.pk)
         rboard_name.append(rboard.author.first_name)
+        rboard_like.append(rboard.like_count)
         if len(rboard.content)>=40:
             content=rboard.content[0:40]
             content+='...'
@@ -140,14 +145,16 @@ def rboards_list(request):
     # rboard = Rboard.objects.get(pk=pk)
     # user = rboard.author
     # author = rboard.user
-    temp=zip(rboard_titles,datetime_gaps,rboard_pks,rboard_contents, rboard_name)
+    temp=zip(rboard_titles,datetime_gaps,rboard_pks,rboard_contents, rboard_name, rboard_like, rboard_comments)
     context = {
         'temp': temp,
         "rboards": rboards,
         'datetime_gaps':datetime_gaps,
         "rboard_titles":rboard_titles,
         'rboard_contents':rboard_contents,
-        'rboard_name': rboard_name
+        'rboard_name': rboard_name,
+        'rboard_like': rboard_like,
+        'rboard_comments': rboard_comments,
     }
     return render(request, "rboards/rboards_list.html", context)
 

@@ -38,7 +38,7 @@
       <hr>
     <p>조회수 : {{ visited_count }} </p>
     {% comment %} 게시글 추천 / 비추 {% endcomment %}
-    <div class="row">
+    {% comment %} <div class="row">
       <div class='col-3 border border-0'>
         <form method="POST" action="{% url 'articles:like_article' pk %}">
           {% csrf_token %}
@@ -50,7 +50,7 @@
           <span> {{ like }} </span>
         </form>
       </div>
-      {% comment %} <div class='col-3 border border-0'>
+      <div class='col-3 border border-0'>
         <form method="POST" action="{% url 'articles:dislike_article' pk %}">
           {% csrf_token %}
           {% if request.user in disliked_users %}
@@ -60,8 +60,8 @@
           {% endif %}
           <span> {{ dislike }} </span>
         </form>
-      </div> {% endcomment %}
-    </div>
+      </div> 
+    </div> {% endcomment %}
     {% comment %} 추천 비추 코드 끝 {% endcomment %}
   </div>
   <div class="container mt-5">

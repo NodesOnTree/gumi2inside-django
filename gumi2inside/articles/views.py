@@ -91,11 +91,16 @@ def articles_list(request):
     article_titles=[]
     article_pks=[]
     article_contents=[]
+    article_like = []
+    article_comments = []
 
     for article in articles:
         time = article.created_at
+        comments = article.comment_set.all()
+        article_comments.append(len(comments))
         article_titles.append(article.title)
         article_pks.append(article.pk)
+        article_like.append(article.like_count)
         if len(article.content)>=40:
             content=article.content[0:40]
             content+='...'
@@ -143,14 +148,15 @@ def articles_list(request):
                 datetime_gaps.append(f'{time_gap}분 전')
 
 
-    temp=zip(article_titles,datetime_gaps,article_pks,article_contents)
+    temp=zip(article_titles,datetime_gaps,article_pks,article_contents, article_like, article_comments)
     context = {
         'temp': temp,
         "articles": articles,
         'datetime_gaps':datetime_gaps,
         "article_titles":article_titles,
         'article_contents':article_contents,
-
+        'article_like': article_like,
+        'article_comments': article_comments,
     }
     return render(request, "articles/articles_list.html", context)
 
