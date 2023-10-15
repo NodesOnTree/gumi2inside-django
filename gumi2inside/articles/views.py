@@ -77,6 +77,8 @@ def detail(request, pk):
         "red" : article.red,
         "green" : article.green,
         "blue" : article.blue,
+        "liked_users": article.liked_users.all(),  # 좋아요를 누른 사용자 목록
+        "disliked_users": article.disliked_users.all()
     }
     
     return render(request, "articles/detail.html", context)

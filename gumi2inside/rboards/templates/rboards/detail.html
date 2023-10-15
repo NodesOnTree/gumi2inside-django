@@ -38,7 +38,30 @@
       <hr>
       <span style="float: right;">작성시간 : {{ new_datetime }}</span>
     <p>조회수 : {{visited_count}} </p>
-
+    <div class="row">
+      <div class='col-3 border border-0'>
+        <form method="POST" action="{% url 'rboards:like_article' pk %}">
+          {% csrf_token %}
+          {% if request.user in liked_users %}
+          <button class='btn btn-primary border border-0' type="submit">🧡 추천!</button>
+          {% else %}
+          <button class='btn btn-outline-primary' type="submit">🧡 추천!</button>
+          {% endif %}
+          <span> {{ like }} </span>
+        </form>
+      </div>
+      {% comment %} <div class='col-3 border border-0'>
+        <form method="POST" action="{% url 'rboards:dislike_article' pk %}">
+          {% csrf_token %}
+          {% if request.user in disliked_users %}
+          <button class="btn btn-danger" type="submit">👎 비추</button>
+          {% else %}
+          <button class="btn btn-outline-danger" type="submit">👎 비추</button>
+          {% endif %}
+          <span> {{ dislike }} </span>
+        </form>
+      </div> {% endcomment %}
+    </div>
   </div>
   <div class="container mt-5">
     <strong>댓글 ({{comments_count}}) </strong>
@@ -53,6 +76,30 @@
     <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
       <div class="mb-3">{{comment.created_at}}</div>
       <div class="bt-2 mx-5" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
+      <div class="row py-3">
+        <div class='col-3 border border-0'>
+          <form method="POST" action="{% url 'rboards:like_comment' comment.pk %}">
+            {% csrf_token %}
+            {% if request.user in comment.comment_liked_users.all %}
+            <button class='btn btn-primary border border-0' type="submit">👍 좋아요!</button>
+            {% else %}
+            <button class='btn btn-outline-primary' type="submit">👍 좋아요!</button>
+            {% endif %}
+            <span> {{ comment.like_count }} </span>
+          </form>
+        </div>
+        <div class='col-3 border border-0'>
+          <form method="POST" action="{% url 'rboards:dislike_comment' comment.pk %}">
+            {% csrf_token %}
+            {% if request.user in comment.comment_disliked_users.all %}
+            <button class="btn btn-danger" type="submit">👎 싫어요</button>
+            {% else %}
+            <button class="btn btn-outline-danger" type="submit">👎 싫어요</button>
+            {% endif %}
+            <span> {{ comment.dislike_count }} </span>
+          </form>
+        </div>
+      </div>
     </div>  
   {% endfor %}
   

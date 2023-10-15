@@ -6,23 +6,10 @@ from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
-# def home(request):
-#     announcements = announcement.objects.order_by('-id')
-#     announce = ''
-#     # print(a)
-#     if announcements.exists():
-#         for i in announcements:
-#             announce = i
-#             break
-#     context ={
-#         'announce':announce
-#     }    
-#     return render(request, "rboards/home.html", context)
-
 @login_required
 def new(request):
     return render(request, "rboards/new.html")
+
 
 @login_required
 def create(request):
@@ -38,6 +25,7 @@ def create(request):
     rboard.save()
     return render(request, "rboards/complete.html")
 
+
 @login_required
 def comment(request, pk):
     content = request.POST.get("comment")
@@ -45,6 +33,7 @@ def comment(request, pk):
     comment.origin_rboard = Rboard.objects.get(pk=pk)
     comment.save()
     return redirect(reverse('rboards:detail', kwargs={'pk': pk}))
+
 
 @login_required
 def complete(request):
@@ -62,7 +51,10 @@ def detail(request, pk):
     rboard.save()
     user = rboard.author
     author = user.first_name
+    user_pk = user.pk
+    
     context = {
+        "rborad" : rboard,
         "pk": pk,
         "title": rboard.title,
         "content": rboard.content,
@@ -74,7 +66,12 @@ def detail(request, pk):
         "red" : rboard.red,
         "green" : rboard.green,
         "blue" : rboard.blue,
-        "author" : author
+        "author" : author,
+        "like" : rboard.like_count,
+        "dislike" : rboard.dislike_count,
+        'user_pk':user_pk,
+        "liked_users": rboard.liked_users.all(),  # 좋아요를 누른 사용자 목록
+        "disliked_users": rboard.disliked_users.all()
     }
     print(context)
     return render(request, "rboards/detail.html", context)
@@ -88,6 +85,7 @@ def rboards_list(request):
     rboard_pks=[]
     rboard_contents=[]
     rboard_name = []
+    
     for rboard in rboards:
         time = rboard.created_at
         rboard_titles.append(rboard.title)
@@ -159,3 +157,99 @@ def delete(request, pk):
     rboard = Rboard.objects.get(pk=pk)
     rboard.delete()
     return redirect("rboards:rboards_list")
+
+
+@login_required
+def like_article(request, article_pk):
+    rboard = Rboard.objects.get(pk=article_pk)
+    user = request.user
+
+    if user in rboard.liked_users.all():
+        # 이미 좋아요를 누른 경우, 취소 처리
+        rboard.liked_users.remove(user)
+        rboard.like_count -= 1
+        rboard.visited_count -= 1
+        rboard.save()
+        return redirect('rboards:detail', pk=rboard.pk)
+    
+    if user in rboard.disliked_users.all():
+        rboard.disliked_users.remove(user)
+        rboard.dislike_count -= 1
+    # 좋아요 처리
+    rboard.liked_users.add(user)
+    rboard.like_count += 1
+    rboard.visited_count -= 1
+    rboard.save()
+    return redirect('rboards:detail', pk=rboard.pk)
+
+
+@login_required
+def dislike_article(request, article_pk):
+    rboard = Rboard.objects.get(pk=article_pk)
+    user = request.user
+
+    if user in rboard.disliked_users.all():
+        # 이미 싫어요를 누른 경우, 취소 처리
+        rboard.disliked_users.remove(user)
+        rboard.dislike_count -= 1
+        rboard.visited_count -= 1
+        rboard.save()
+        return redirect('rboards:detail', pk=rboard.pk)
+    
+    if user in rboard.liked_users.all():
+        rboard.liked_users.remove(user)
+        rboard.like_count -= 1
+    # 싫어요 처리
+    rboard.disliked_users.add(user)
+    rboard.dislike_count += 1
+    rboard.visited_count -= 1
+    rboard.save()
+    return redirect('rboards:detail', pk=rboard.pk)
+
+
+@login_required
+def like_comment(request, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    user = request.user
+
+    if user in comment.comment_liked_users.all():
+        # 이미 좋아요를 누른 경우, 취소 처리
+        comment.comment_liked_users.remove(user)
+        comment.like_count -= 1
+    else:
+        if user in comment.comment_disliked_users.all():
+            comment.comment_disliked_users.remove(user)
+            comment.dislike_count -= 1
+        # 좋아요 처리
+        comment.comment_liked_users.add(user)
+        comment.like_count += 1
+        
+    rboard = comment.origin_rboard
+    rboard.visited_count -= 1
+    rboard.save()
+    comment.save()
+    return redirect('rboards:detail', pk=rboard.pk)
+
+
+@login_required
+def dislike_comment(request, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    user = request.user
+
+    if user in comment.comment_disliked_users.all():
+        # 이미 싫어요를 누른 경우, 취소 처리
+        comment.comment_disliked_users.remove(user)
+        comment.dislike_count -= 1
+    else:
+    
+        if user in comment.comment_liked_users.all():
+            comment.comment_liked_users.remove(user)
+            comment.like_count -= 1
+        # 싫어요 처리
+        comment.comment_disliked_users.add(user)
+        comment.dislike_count += 1
+    rboard = comment.origin_rboard
+    rboard.visited_count -= 1
+    rboard.save()
+    comment.save()
+    return redirect('rboards:detail', pk=rboard.pk)
