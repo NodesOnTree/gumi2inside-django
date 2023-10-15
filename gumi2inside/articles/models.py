@@ -17,7 +17,8 @@ class Article(models.Model):
     dislike_count = models.IntegerField(default=0)
     liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_articles")
     disliked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="disliked_articles")
-    
+    img_url = models.TextField()
+    status = models.TextField(default="Article")
 
 class Comment(models.Model):
     content = models.TextField()
