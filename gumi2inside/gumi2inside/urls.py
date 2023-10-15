@@ -25,5 +25,6 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('accounts/', include('accounts.urls')),
     path('announcements/', include('announcements.urls')),
+    path('rboards', include('rboards.urls')),
     path('admin_img/', include('admin_img.urls')),
 ]

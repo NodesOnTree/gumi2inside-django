@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="d-flex flex-column text-center">
+    <h1 class="fw-bold">이얏호~ 글이 작성되었어용~</h1>
+    <a style="text-decoration:none; color: #8a2be2;" href="{% url "rboards:rboards_list" %}"><h1 class="fw-bold text-#8a2be2">보러 가볼까요?~</h1></a>
+    <a style="text-decoration:none; color: #8a2be2;" href="{% url "rboards:rboards_list" %}"><img src="{% static 'complete.png' %}" class="img-fluid mx-5" alt="..."></a>
+</div>
+{% endblock content %}
