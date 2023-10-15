@@ -11,6 +11,8 @@ class Article(models.Model):
     image = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     visited_count = models.IntegerField()
+    img_url = models.TextField()
+    status = models.TextField(default="Article")
 
 class Comment(models.Model):
     content = models.TextField()

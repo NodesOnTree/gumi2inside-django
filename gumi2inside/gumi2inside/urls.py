@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from articles import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include('articles.urls')),
@@ -24,5 +25,5 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('accounts/', include('accounts.urls')),
     path('announcements/', include('announcements.urls')),
-
+    path('admin_img/', include('admin_img.urls')),
 ]
