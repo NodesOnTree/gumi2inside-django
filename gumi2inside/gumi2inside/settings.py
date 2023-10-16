@@ -39,9 +39,8 @@ INSTALLED_APPS = [
     'accounts',
     'common',
     'rboards',
-    'storages',
+    # 'storages',
     'admin_img',
-    'rest_framework',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,10 +127,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
-] #static 파일들이 어디에 있는지를 쓰는곳
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS=[
+#     os.path.join(BASE_DIR,'static')
+# ] #static 파일들이 어디에 있는지를 쓰는곳
 
 
 # Default primary key field type
