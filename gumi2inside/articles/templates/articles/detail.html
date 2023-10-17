@@ -23,7 +23,7 @@
 <div class='bg_top_2'>
   <div class="container mt-5 mb-3">
     <div>
-      <strong> {{ title }}</strong>
+      <strong class="text-break"> {{ title }}</strong>
       <span style="float: right;">작성시간 : {{ new_datetime }}</span>
       <div style="clear: both;"></div>
       <hr>
@@ -33,7 +33,7 @@
       {% endif %}
       <div>
         <!--여기에 클래스 추가-->
-        <p style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
+        <p class="text-break" style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
       </div>
       <hr>
     <p>조회수 : {{ visited_count }} </p>
@@ -106,9 +106,9 @@
   {% endfor %}
   
 
-  <form action="{% url "articles:delete" pk %}">
+  {% comment %} <form action="{% url "articles:delete" pk %}">
     <input type="submit" value="삭제">
-  </form>
+  </form> {% endcomment %}
 </div>
 
 {% endblock content %}
