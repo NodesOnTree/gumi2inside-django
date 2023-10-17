@@ -55,7 +55,7 @@
   
 <div class="bubble-write-button-container">
     <button class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#writeModal">
-        <img src="{% static 'bubble_write_button.png' %}" alt="write-bubble" class="img-fluid">
+        <img src="https://gumi2inside.s3.ap-northeast-2.amazonaws.com/Static/bubble_write_button.png" alt="write-bubble" class="img-fluid">
     </button>
 </div>
 
@@ -68,12 +68,12 @@
         <div class="bubble-emotions-container d-flex justify-content-between">
             <a href="{% url "ciders:like_bubble" bubble.id %}">
                 <button class="bubble-emotions btn btn-light" onclick="likeBubble({{ bubble.id }})">
-                    <img src="{% static 'like_button.png' %}" alt="좋아요" class="img-fluid">
+                    <img src="https://gumi2inside.s3.ap-northeast-2.amazonaws.com/Static/like_button.png" alt="좋아요" class="img-fluid">
                 </button>
             </a>
             <a href="{% url "ciders:dislike_bubble" bubble.id %}">
                 <button class="bubble-emotions btn btn-light" onclick="dislikeBubble({{ bubble.id }})">
-                    <img src="{% static 'dislike_button.png' %}" alt="싫어요" class="img-fluid">
+                    <img src="https://gumi2inside.s3.ap-northeast-2.amazonaws.com/Static/dislike_button.png" alt="싫어요" class="img-fluid">
                 </button>
             </a>
         </div>
