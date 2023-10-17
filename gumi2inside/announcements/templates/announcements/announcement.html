@@ -58,47 +58,51 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <div class="collapse navbar-collapse space-between" id="navbarSupportedContent">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                           <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'articles:articles_list' %}">익명 게시판</a>
-                        </li> 
-                        <li>
-                          <a class="nav-link" href="{% url 'rboards:rboards_list' %}">실명 게시판</a>
-                        </li>
-                        <li>
-                          <a class="nav-link" href="{% url 'articles:polls_list' %}">투표 게시판</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
-                        </li> 
-                            {% if request.user.is_authenticated %}
-                    
-                  
-                      <li class="nav-item">
-                        <form action="{% url "accounts:logout" %}" method="POST">
-                          {% csrf_token %}
-                          <input type="submit" value="로그아웃" class="nav-link fw-bold" style="color: red;">
-                        </form>
-                      </li>
-
-                      {% else %}
-                      
-                    
-                      <li class="nav-item">
-                        <a class="nav-link fw-bold" style="color: blue;" href="{% url 'accounts:signup' %}?next={{ request.path }}">회원가입</a>
-                        </form>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link fw-bold" style="color: blue;" href="{% url 'accounts:login' %}?next={{ request.path }}">로그인</a>
-                      </li> 
-                      {% endif %}
-                        </ul>
+                              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">홈</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{% url 'articles:articles_list' %}">익명 게시판</a>
+                          </li> 
+                          <li>
+                            <a class="nav-link" href="{% url 'rboards:rboards_list' %}">실명 게시판</a>
+                          </li>
+                          <li>
+                            <a class="nav-link" href="{% url 'articles:polls_list' %}">투표 게시판</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
+                          </li> 
+                      </ul>
+                      <ul class="navbar-nav mb-2 mb-lg-0">
+                          {% if request.user.is_authenticated %}
                         
-                    </div>
+                          <li class="nav-item">
+                            <a class="nav-link fw-bold text-body-tertiary" href="{% url 'accounts:update' %}?next={{ request.path }}">회원정보 수정</a>
+                          </li> 
+                          <li class="nav-item">
+                            <form action="{% url "accounts:logout" %}" method="POST">
+                              {% csrf_token %}
+                              <input type="submit" value="로그아웃" class="nav-link fw-bold text-body-tertiary" >
+                            </form>
+                          </li>
+    
+                          {% else %}
+                          
+                        
+                          <li class="nav-item">
+                            <a class="nav-link fw-bold" href="{% url 'accounts:signup' %}?next={{ request.path }}">회원가입</a>
+                            </form>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link fw-bold" href="{% url 'accounts:login' %}?next={{ request.path }}">로그인</a>
+                          </li> 
+                          {% endif %}
+                      </ul>
+                    
+                  </div>
                 </div>
             </nav>
             
