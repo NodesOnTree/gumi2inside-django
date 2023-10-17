@@ -57,7 +57,7 @@ class Command(BaseCommand):
         res = requests.get(url, cookies=cookies).json()
 
         main_menu, sub_menu = "", ""
-        kcal, carbs, protein, fat = 0, 0, 0, 0
+        kcal, carbs, protein, fat, sodium = 0, 0, 0, 0, 0
         image_url = ""
         for idx, menu in enumerate(res['data']):
             if idx == 0:
