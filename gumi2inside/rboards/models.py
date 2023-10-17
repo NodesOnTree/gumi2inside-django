@@ -18,6 +18,8 @@ class Rboard(models.Model):
     dislike_count = models.IntegerField(default=0)
     liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="real_liked_articles")
     disliked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="real_disliked_articles")
+    img_url = models.TextField()
+    status = models.TextField(default="Rboard")
 
 
 class Comment(models.Model):

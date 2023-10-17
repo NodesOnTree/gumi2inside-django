@@ -73,24 +73,28 @@
     </form>
   </div>
   {% for comment in comments %}
-    <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
-      <div class="mb-3">{{ comment.created_at }}</div>
-      <div class="bt-2 mx-5" style="white-space: pre-line">{{ comment.content|urlize|safe|target_blank }} </div>
-      {% comment %} 댓글 좋아요 싫어요 {% endcomment %}
-      <div class="row py-3">
-        <div class='col-3 border border-0'>
-          <form method="POST" action="{% url 'articles:like_comment' comment.pk %}">
+  <div class="container my-4 pt-4 pb-2 px-5 bg-light bg-realgrey">
+    <div class="row">
+      <div class='col-8 col-md-9 col-lg-10 align-self-center'>
+        <div class="mb-3">
+          <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3 text-body-tertiary">익명</span> </p>
+        </div>
+        <div class="my-2 mx-5 text-break" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
+      </div>
+      <div class="col-4 col-md-3 col-lg-2 align-self-center">
+        <div class='border border-0 pb-2'>
+          <form method="POST" action="{% url 'rboards:like_comment' comment.pk %}">
             {% csrf_token %}
             {% if request.user in comment.comment_liked_users.all %}
-            <button class='btn btn-primary border border-0' type="submit">👍 좋아요!</button>
+            <button class='btn btn-primary' type="submit">👍 좋아요!</button>
             {% else %}
             <button class='btn btn-outline-primary' type="submit">👍 좋아요!</button>
             {% endif %}
             <span> {{ comment.like_count }} </span>
           </form>
         </div>
-        <div class='col-3 border border-0'>
-          <form method="POST" action="{% url 'articles:dislike_comment' comment.pk %}">
+        <div class='border border-0 pb-2'>
+          <form method="POST" action="{% url 'rboards:dislike_comment' comment.pk %}">
             {% csrf_token %}
             {% if request.user in comment.comment_disliked_users.all %}
             <button class="btn btn-danger" type="submit">👎 싫어요</button>
@@ -101,8 +105,8 @@
           </form>
         </div>
       </div>
-      {% comment %} 좋아요 싫어요 코드 {% endcomment %}
-    </div>  
+    </div>
+  </div>  
   {% endfor %}
   
 
