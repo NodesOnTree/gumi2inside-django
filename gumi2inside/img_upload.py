@@ -33,11 +33,8 @@ def img_upload(request, item):
 
     # 업로드한 파일의 S3 URL 생성
     s3_url = f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com/{s3_path}"
-    print(s3_url)
     # User 모델의 img_url 필드에 S3 URL 저장
     item.img_url = s3_url
-    print(item.title)
-    print(item.img_url)
     item.save()
 
 
