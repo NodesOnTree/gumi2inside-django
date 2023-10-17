@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            <h2>투표 수정</h2>
+            {% if messages %}
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <br>
+                <button type="submit" class="btn btn-primary">완료</button>
+                <a class="btn btn-danger" href="{% url 'articles:polls_delete' poll.id %}" role="button" onclick="return confirm('삭제하시겠습니까?')">투표 삭제</a>
+                <a class="btn btn-warning" href="{% url 'articles:polls_add_choice' poll.id %}" role="button">보기 추가</a>
+            </form>
+
+            <div class="choices">
+                <h2 class="text-center mt-3">보기</h2>
+                <hr>
+                <ul class="list-group">
+                    {% for choice in poll.choice_set.all %}
+                    <li class="list-group-item"><a href="{% url 'articles:polls_choice_edit' choice.id %}"><i class="fas fa-pencil-alt"></i></a>&nbsp
+                        {{ choice.choice_text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

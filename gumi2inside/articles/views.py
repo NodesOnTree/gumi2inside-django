@@ -1,14 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .models import Article, Comment
+from .models import Article, Comment, Poll, Choice, Vote
 from common.models import Lunch
 from accounts.models import User
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from img_upload import img_upload,img_view
 from admin_img.models import Carousel
+from .forms import PollAddForm, EditPollForm, ChoiceAddForm
+from django.core.paginator import Paginator
+from django.db.models import Count
+from django.contrib import messages
+from datetime import datetime
+from announcements.models import announcement
+from django.utils import timezone
 
 # Create your views here.
 def home(request):
@@ -281,3 +288,207 @@ def dislike_comment(request, comment_pk):
     article.save()
     comment.save()
     return redirect('articles:detail', pk=article.pk)
+
+def polls_list(request):
+    all_polls = Poll.objects.order_by('-id')
+    paginator = Paginator(all_polls, 10)  # Show 6 contacts per page
+    page = request.GET.get('page')
+    polls = paginator.get_page(page)
+
+    get_dict_copy = request.GET.copy()
+    params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
+    # current_time = timezone.now()
+    # time_difference = current_time - poll.created_at
+    context = {
+        'polls': polls,
+        'params': params,
+        
+    }
+    return render(request, 'articles/polls_list.html', context)
+
+
+@login_required()
+def polls_list_by_user(request):
+    all_polls = Poll.objects.filter(owner=request.user)
+    paginator = Paginator(all_polls, 10)  # Show 7 contacts per page
+
+    page = request.GET.get('page')
+    polls = paginator.get_page(page)
+
+    context = {
+        'polls': polls,
+    }
+    return render(request, 'articles/polls_list.html', context)
+
+
+@login_required()
+def polls_add(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PollAddForm(request.POST)
+            if form.is_valid:
+                poll = form.save(commit=False)
+                poll.owner = request.user
+                poll.save()
+                new_choice1 = Choice(
+                    poll=poll, choice_text=form.cleaned_data['choice1']).save()
+                new_choice2 = Choice(
+                    poll=poll, choice_text=form.cleaned_data['choice2']).save()
+
+                
+                return redirect('articles:polls_list')
+        else:
+            form = PollAddForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'articles/add_poll.html', context)
+    else:
+        return redirect('articles:polls_list')
+
+
+@login_required
+def polls_edit(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    if request.user != poll.owner:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = EditPollForm(request.POST, instance=poll)
+        if form.is_valid:
+            form.save()
+            
+            return redirect("articles:polls_list")
+
+    else:
+        form = EditPollForm(instance=poll)
+
+    return render(request, "articles/poll_edit.html", {'form': form, 'poll': poll})
+
+
+@login_required
+def polls_delete(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    if request.user != poll.owner:
+        return redirect('home')
+    poll.delete()
+    
+    return redirect("articles:polls_list")
+
+
+@login_required
+def polls_add_choice(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    if request.user != poll.owner:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = ChoiceAddForm(request.POST)
+        if form.is_valid:
+            new_choice = form.save(commit=False)
+            new_choice.poll = poll
+            new_choice.save()
+            
+            return redirect('articles:polls_edit', poll.id)
+    else:
+        form = ChoiceAddForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'articles/add_choice.html', context)
+
+
+@login_required
+def polls_choice_edit(request, choice_id):
+    choice = get_object_or_404(Choice, pk=choice_id)
+    poll = get_object_or_404(Poll, pk=choice.poll.id)
+    if request.user != poll.owner:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = ChoiceAddForm(request.POST, instance=choice)
+        if form.is_valid:
+            new_choice = form.save(commit=False)
+            new_choice.poll = poll
+            new_choice.save()
+
+            return redirect('articles:polls_edit', poll.id)
+    else:
+        form = ChoiceAddForm(instance=choice)
+    context = {
+        'form': form,
+        'edit_choice': True,
+        'choice': choice,
+    }
+    return render(request, 'articles/polls_add_choice.html', context)
+
+
+@login_required
+def polls_choice_delete(request, choice_id):
+    choice = get_object_or_404(Choice, pk=choice_id)
+    poll = get_object_or_404(Poll, pk=choice.poll.id)
+    if request.user != poll.owner:
+        return redirect('home')
+    choice.delete()
+
+    return redirect('articles:polls_edit', poll.id)
+
+
+def poll_detail(request, poll_id):
+    poll = get_object_or_404(Poll, id=poll_id)
+
+    if not poll.active:
+        return render(request, 'articles/poll_result.html', {'poll': poll})
+    loop_count = poll.choice_set.count()
+    context = {
+        'poll': poll,
+        'loop_time': range(0, loop_count),
+    }
+    return render(request, 'articles/poll_detail.html', context)
+
+
+@login_required
+def poll_vote(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    choice_id = request.POST.get('choice')
+    user_can_vote = poll.user_can_vote(request.user)
+    choice = Choice.objects.get(id=choice_id)
+    user=request.user
+    if not poll.user_can_vote(request.user):
+        vote = Vote.objects.get(poll_id=poll_id,user_id=user.id)
+        
+        vote.choice=choice
+        vote.save()
+        context={
+            'poll': poll,
+            'user_can_vote' : user_can_vote
+        }
+        return render(request, 'articles/poll_result.html',context )
+
+    if choice_id:
+        
+        vote = Vote(user=request.user, poll=poll, choice=choice)
+        vote.save()
+        context={
+            'poll': poll,
+            'user_can_vote' : user_can_vote
+        }
+        return render(request, 'articles/poll_result.html',context )
+    else:
+
+        return redirect("articles:polls_detail", poll_id)
+    
+
+
+@login_required
+def polls_endpoll(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    if request.user != poll.owner:
+        return redirect('home')
+
+    if poll.active is True:
+        poll.active = False
+        poll.save()
+        return render(request, 'articles/poll_result.html', {'poll': poll})
+    else:
+        return render(request, 'articles/poll_result.html', {'poll': poll})

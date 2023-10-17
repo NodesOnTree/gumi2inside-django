@@ -64,6 +64,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="collapse navbar-collapse space-between" id="navbarSupportedContent">
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                           <li class="nav-item">
@@ -74,6 +75,9 @@
                           </li> 
                           <li>
                             <a class="nav-link" href="{% url 'rboards:rboards_list' %}">실명 게시판</a>
+                          </li>
+                          <li>
+                            <a class="nav-link" href="{% url 'articles:polls_list' %}">투표 게시판</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
@@ -93,7 +97,6 @@
                           </li>
     
                           {% else %}
-                          
                         
                           <li class="nav-item">
                             <a class="nav-link fw-bold" href="{% url 'accounts:signup' %}?next={{ request.path }}">회원가입</a>
