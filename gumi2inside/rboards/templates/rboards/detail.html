@@ -23,7 +23,7 @@
 <div class='bg_top_2'>
   <div class="container mt-5 mb-3">
     <div>
-      <strong> {{ title }}</strong>
+      <strong class="text-break"> {{ title }}</strong>
       <span style="float: right;">작성자 : {{ author }}</span>
       <div style="clear: both;"></div>
       <hr>
@@ -33,7 +33,7 @@
       {% endif %}
       <div>
         <!--여기에 클래스 추가-->
-        <p style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
+        <p class="text-break" style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
       </div>
       <hr>
       <span style="float: right;">작성시간 : {{ new_datetime }}</span>
@@ -73,40 +73,46 @@
     </form>
   </div>
   {% for comment in comments %}
-    <div class="container mt-4 py-4 px-5 bg-light bg-realgrey">
-      <div class="mb-3">{{comment.created_at}}</div>
-      <div class="bt-2 mx-5" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
-      <div class="row py-3">
-        <div class='col-3 border border-0'>
-          <form method="POST" action="{% url 'rboards:like_comment' comment.pk %}">
-            {% csrf_token %}
-            {% if request.user in comment.comment_liked_users.all %}
-            <button class='btn btn-primary border border-0' type="submit">👍 좋아요!</button>
-            {% else %}
-            <button class='btn btn-outline-primary' type="submit">👍 좋아요!</button>
-            {% endif %}
-            <span> {{ comment.like_count }} </span>
-          </form>
+    <div class="container my-4 pt-4 pb-2 px-5 bg-light bg-realgrey">
+      <div class="row">
+        <div class='col-8 col-md-9 col-lg-10 align-self-center'>
+          <div class="mb-3">
+            <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3">{{ comment.user }}</span> </p>
+          </div>
+          <div class="my-2 mx-5 text-break" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
         </div>
-        <div class='col-3 border border-0'>
-          <form method="POST" action="{% url 'rboards:dislike_comment' comment.pk %}">
-            {% csrf_token %}
-            {% if request.user in comment.comment_disliked_users.all %}
-            <button class="btn btn-danger" type="submit">👎 싫어요</button>
-            {% else %}
-            <button class="btn btn-outline-danger" type="submit">👎 싫어요</button>
-            {% endif %}
-            <span> {{ comment.dislike_count }} </span>
-          </form>
+        <div class="col-4 col-md-3 col-lg-2 align-self-center">
+          <div class='border border-0 pb-2'>
+            <form method="POST" action="{% url 'rboards:like_comment' comment.pk %}">
+              {% csrf_token %}
+              {% if request.user in comment.comment_liked_users.all %}
+              <button class='btn btn-primary' type="submit">👍 좋아요!</button>
+              {% else %}
+              <button class='btn btn-outline-primary' type="submit">👍 좋아요!</button>
+              {% endif %}
+              <span> {{ comment.like_count }} </span>
+            </form>
+          </div>
+          <div class='border border-0 pb-2'>
+            <form method="POST" action="{% url 'rboards:dislike_comment' comment.pk %}">
+              {% csrf_token %}
+              {% if request.user in comment.comment_disliked_users.all %}
+              <button class="btn btn-danger" type="submit">👎 싫어요</button>
+              {% else %}
+              <button class="btn btn-outline-danger" type="submit">👎 싫어요</button>
+              {% endif %}
+              <span> {{ comment.dislike_count }} </span>
+            </form>
+          </div>
         </div>
       </div>
     </div>  
   {% endfor %}
   
 
-  <form action="{% url "rboards:delete" pk %}">
+  {% comment %} <form action="{% url "rboards:delete" pk %}">
     <input type="submit" value="삭제">
-  </form>
+  </form> {% endcomment %}
 </div>
 
 {% endblock content %}

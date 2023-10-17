@@ -31,6 +31,7 @@ def comment(request, pk):
     content = request.POST.get("comment")
     comment = Comment(content=content)
     comment.origin_rboard = Rboard.objects.get(pk=pk)
+    comment.user = request.user
     comment.save()
     return redirect(reverse('rboards:detail', kwargs={'pk': pk}))
 

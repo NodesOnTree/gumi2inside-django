@@ -50,12 +50,11 @@ def create(request):
     blue = request.POST.get("blue")
     article = Article(textsize=textsize, red=red, green=green, blue=blue,title=title, content=content, visited_count = 0, like_count = 0, dislike_count = 0)
     article.save()
-    if request.FILES['file']:
+    if 'file' in request.FILES:
         img_upload(request, article)
     return render(request, "articles/complete.html")
 
 
-@login_required
 def comment(request, pk):
     content = request.POST.get("comment")
     comment = Comment(content=content, like_count = 0, dislike_count = 0,)
