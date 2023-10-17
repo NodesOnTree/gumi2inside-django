@@ -2,20 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Article, Comment, Poll, Choice, Vote
 from common.models import Lunch
-from accounts.models import User
 from datetime import datetime
 from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
 from img_upload import img_upload,img_view
 from admin_img.models import Carousel
 from .forms import PollAddForm, EditPollForm, ChoiceAddForm
 from django.core.paginator import Paginator
-from django.db.models import Count
-from django.contrib import messages
 from datetime import datetime
 from announcements.models import announcement
-from django.utils import timezone
+
 
 # Create your views here.
 def home(request):

@@ -28,9 +28,9 @@
       <div style="clear: both;"></div>
       <hr>
     </div>
-      {% if image %}
-        <img src="{{ image.url }}" alt="image"> 
-      {% endif %}
+    {% if img_url %}
+      <img src="{{ img_url }}" alt="image" style="max-width: 90%;">
+    {% endif %}
       <div>
         <!--여기에 클래스 추가-->
         <p class="text-break" style="color: rgb({{red|safe}}, {{green|safe}}, {{blue|safe}}); font-size : {{textsize|safe}}px; white-space: pre-line" > {{content|urlize|safe|target_blank}}</p>
@@ -77,7 +77,7 @@
       <div class="row">
         <div class='col-8 col-md-9 col-lg-10 align-self-center'>
           <div class="mb-3">
-            <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3">{{ comment.user }}</span> </p>
+            <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3 text-body-tertiary">{{ author }}</span> </p>
           </div>
           <div class="my-2 mx-5 text-break" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
         </div>

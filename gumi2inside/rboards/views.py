@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from img_upload import img_upload,img_view
 from .models import Rboard, Comment
 from datetime import datetime
-from announcements.models import announcement
 from django.contrib.auth.decorators import login_required
 
 
@@ -23,6 +23,9 @@ def create(request):
     # print(red,green,blue)
     rboard = Rboard(textsize=textsize, red=red, green=green, blue=blue,title=title, content=content, visited_count = 0,author=request.user)
     rboard.save()
+    if 'file' in request.FILES:
+        print('왔다!!')
+        img_upload(request, rboard)
     return render(request, "rboards/complete.html")
 
 
@@ -74,7 +77,7 @@ def detail(request, pk):
         "liked_users": rboard.liked_users.all(),  # 좋아요를 누른 사용자 목록
         "disliked_users": rboard.disliked_users.all()
     }
-    print(context)
+    context = img_view(rboard,context)
     return render(request, "rboards/detail.html", context)
 
 

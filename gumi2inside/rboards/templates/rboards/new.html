@@ -34,7 +34,7 @@
     <h2 class="m-3" style="text-align:center;"><strong>글쓰기</strong></strong></h2>
     </div>
     <hr class="mx-3 my-hr2">
-    <form action="{% url "rboards:create" %}" method="POST">
+    <form action="{% url "rboards:create" %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}  <!--POST 요청시 필요한 요소-->
       <div class="mx-3">
         <input type="text" placeholder=" 제목" id="title" name="title" style="width: 100%;"> 
@@ -43,6 +43,9 @@
       <hr class="mx-3 my-hr2">
       <div class="mx-3">
         <textarea name="content" placeholder=" 내용" id="content" cols="30" rows="16" style="width: 100%;"></textarea>
+      </div>
+      <div>
+        <input class="ps-3" type="file" name="file" accept="image/*">
       </div>
       {% comment %}  {% endcomment %}
       <div class="mx-3 d-flex">
