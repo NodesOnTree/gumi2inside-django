@@ -24,9 +24,9 @@ def home(request):
         for i in announcements:
             announce = i
             break
-    carousel1 = Carousel.objects.get(number=1)
-    carousel2 = Carousel.objects.get(number=2)
-    carousel3 = Carousel.objects.get(number=3)
+    carousel1 = Carousel.objects.filter(number=1).order_by('-id').first()
+    carousel2 = Carousel.objects.filter(number=2).order_by('-id').first()
+    carousel3 = Carousel.objects.filter(number=3).order_by('-id').first()
     context ={
         'announce':announce,
         'a_menu':a_menu,
