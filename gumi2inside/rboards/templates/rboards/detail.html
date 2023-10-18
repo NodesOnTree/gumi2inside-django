@@ -77,7 +77,7 @@
       <div class="row">
         <div class='col-8 col-md-9 col-lg-10 align-self-center'>
           <div class="mb-3">
-            <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3 text-body-tertiary">{{ author }}</span> </p>
+            <p><span class="pe-3">{{ comment.created_at }}</span> <span class="border border-dark-subtle"></span> <span class="ps-3 text-body-tertiary">{{ comment.user.first_name }}</span> </p>
           </div>
           <div class="my-2 mx-5 text-break" style="white-space: pre-line">{{comment.content|urlize|safe|target_blank}} </div>
         </div>
