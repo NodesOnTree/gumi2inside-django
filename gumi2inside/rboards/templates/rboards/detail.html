@@ -86,9 +86,9 @@
             <form method="POST" action="{% url 'rboards:like_comment' comment.pk %}">
               {% csrf_token %}
               {% if request.user in comment.comment_liked_users.all %}
-              <button class='btn btn-primary' type="submit">👍 좋아요!</button>
+              <button class='btn btn-primary' type="submit">👍 좋아요</button>
               {% else %}
-              <button class='btn btn-outline-primary' type="submit">👍 좋아요!</button>
+              <button class='btn btn-outline-primary' type="submit">👍 좋아요</button>
               {% endif %}
               <span> {{ comment.like_count }} </span>
             </form>
