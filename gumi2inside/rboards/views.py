@@ -4,7 +4,8 @@ from img_upload import img_upload,img_view
 from .models import Rboard, Comment
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404
 
 @login_required
 def new(request):
@@ -45,14 +46,21 @@ def complete(request):
 
 
 def detail(request, pk):
-    rboard = Rboard.objects.get(pk=pk)
+    rboard = get_object_or_404(Rboard, pk=pk)
+
+    # 게시물의 세션 키를 생성
+    session_key = f'rboard_{pk}_visited'
+
+    # 이미 방문한 경우 조회수 증가를 막습니다.
+    if session_key not in request.session:
+        rboard.visited_count += 1
+        rboard.save()
+        # 세션에 플래그를 추가하여 중복 조회수를 방지
+        request.session[session_key] = True
+
     time = rboard.created_at
-    new_datetime=''
-    new_datetime+=str(time)[0:11]
-    new_datetime+=str(time)[11:16]
+    new_datetime = str(time)[:11] + str(time)[11:16]
     comments = rboard.comment_set.all()
-    rboard.visited_count += 1
-    rboard.save()
     user = rboard.author
     author = user.first_name
     user_pk = user.pk
@@ -179,7 +187,7 @@ def like_article(request, article_pk):
         # 이미 좋아요를 누른 경우, 취소 처리
         rboard.liked_users.remove(user)
         rboard.like_count -= 1
-        rboard.visited_count -= 1
+        # rboard.visited_count -= 1
         rboard.save()
         return redirect('rboards:detail', pk=rboard.pk)
     
@@ -189,7 +197,7 @@ def like_article(request, article_pk):
     # 좋아요 처리
     rboard.liked_users.add(user)
     rboard.like_count += 1
-    rboard.visited_count -= 1
+    # rboard.visited_count -= 1
     rboard.save()
     return redirect('rboards:detail', pk=rboard.pk)
 
@@ -203,7 +211,7 @@ def dislike_article(request, article_pk):
         # 이미 싫어요를 누른 경우, 취소 처리
         rboard.disliked_users.remove(user)
         rboard.dislike_count -= 1
-        rboard.visited_count -= 1
+        # rboard.visited_count -= 1
         rboard.save()
         return redirect('rboards:detail', pk=rboard.pk)
     
@@ -213,7 +221,7 @@ def dislike_article(request, article_pk):
     # 싫어요 처리
     rboard.disliked_users.add(user)
     rboard.dislike_count += 1
-    rboard.visited_count -= 1
+    # rboard.visited_count -= 1
     rboard.save()
     return redirect('rboards:detail', pk=rboard.pk)
 
@@ -236,7 +244,7 @@ def like_comment(request, comment_pk):
         comment.like_count += 1
         
     rboard = comment.origin_rboard
-    rboard.visited_count -= 1
+    # rboard.visited_count -= 1
     rboard.save()
     comment.save()
     return redirect('rboards:detail', pk=rboard.pk)
@@ -260,7 +268,7 @@ def dislike_comment(request, comment_pk):
         comment.comment_disliked_users.add(user)
         comment.dislike_count += 1
     rboard = comment.origin_rboard
-    rboard.visited_count -= 1
+    # rboard.visited_count -= 1
     rboard.save()
     comment.save()
     return redirect('rboards:detail', pk=rboard.pk)
