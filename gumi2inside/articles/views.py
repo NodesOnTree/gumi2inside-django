@@ -11,6 +11,7 @@ from .forms import PollAddForm, EditPollForm, ChoiceAddForm
 from django.core.paginator import Paginator
 from datetime import datetime
 from announcements.models import announcement
+from django.utils import timezone
 
 
 # Create your views here.
@@ -106,79 +107,13 @@ def detail(request, pk):
 
 def articles_list(request):
     articles = Article.objects.order_by('-id')
-    months={'01':31, '02':31+28, '03':31+28+31, '04':31+28+31+30, '05':31+28+31+30+31, '06':31+28+31+30+31+30, '07':31+28+31+30+31+30+31, '08':31+28+31+30+31+30+31+31, '09':31+28+31+30+31+30+31+31+30, '10':31+28+31+30+31+30+31+31+30+31, '11':31+28+31+30+31+30+31+31+30+31+30, '12':31+28+31+30+31+30+31+31+30+31+30+31}
-    datetime_gaps=[]
-    article_titles=[]
-    article_pks=[]
-    article_contents=[]
-    article_like = []
-    article_comments = []
+  
 
-    for article in articles:
-        time = article.created_at
-        comments = article.comment_set.all()
-        article_comments.append(len(comments))
-        article_titles.append(article.title)
-        article_pks.append(article.pk)
-        article_like.append(article.like_count)
-        if len(article.content)>=40:
-            content=article.content[0:40]
-            content+='...'
-            article_contents.append(content)
-        else:
-            article_contents.append(article.content)
-        new_datetime=''
-        new_datetime+=str(time)[0:11]
-        new_datetime+=str(time)[11:16]
-
-        current_time = datetime.now()
-        now_datetime=''
-        now_datetime+=str(current_time)[0:11]
-        now_datetime+=str(current_time)[11:16]
-       
-        now_date=int(str(current_time)[0:11].replace('-',''))
-        now_year=str(now_date)[0:4]
-        now_month=str(now_date)[4:6]
-        now_day=str(now_date)[6:]
-        write_date=int(str(time)[0:11].replace('-',''))
-        write_year=str(write_date)[0:4]
-        write_month=str(write_date)[4:6]
-        write_day=str(write_date)[6:]
-        new_time=int(str(time)[11:13])*60+int(str(time)[14:16])
-    
-        now_time=int(str(current_time)[11:13])*60+int(str(current_time)[14:16])
-       
-        time_gap=now_time-new_time
-        
-        if now_date-write_date>=1:
-            nowdays= int(now_day)+months[now_month]
-            writedays= int(write_day)+months[write_month]
-            if now_year!=write_year:
-                nowdays+=365*(int(now_year)-int(write_year))
-                if nowdays-writedays>=365:
-                    datetime_gaps.append(f'{int(now_year)-int(write_year)}년 전')
-                elif nowdays-writedays<365:
-                    datetime_gaps.append(f'{nowdays-writedays}일 전')
-            else:
-                datetime_gaps.append(f'{nowdays-writedays}일 전')
-        else:
-            if time_gap>=60:
-                datetime_gaps.append(f'{time_gap//60}시간 전')
-            else:
-                datetime_gaps.append(f'{time_gap}분 전')
-
-
-    temp=zip(article_titles,datetime_gaps,article_pks,article_contents, article_like, article_comments)
     context = {
-        'temp': temp,
-        "articles": articles,
-        'datetime_gaps':datetime_gaps,
-        "article_titles":article_titles,
-        'article_contents':article_contents,
-        'article_like': article_like,
-        'article_comments': article_comments,
+        'articles' : articles,
     }
     return render(request, "articles/articles_list.html", context)
+
 
 
 @login_required
