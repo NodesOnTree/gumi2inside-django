@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_filters %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -120,26 +122,26 @@
       <div class='container ' style="padding-left: 100px; padding-top: 55px; padding-right: 100px; ">
         <div class="row bg-white">
     
-          {% for title, date_gap,pk, content, like, len_comments in temp%}
+          {% for article in articles%}
           <div  class="container col-md-12 ">
             <div class="row">
-              <form method="POST" action="{% url 'articles:detail' pk%}">
+              <form method="POST" action="{% url 'articles:detail' article.pk%}">
                 {% csrf_token %}
                 <div class="col-md-6 offset-3 ">
                   <div class="card text-black mt-5">
                     <button class="btn btn-outline-none text-truncate" type='submit'>
                       <div class="row card-title text-truncate  align-items-center">
-                        <span class='col-9 ps-5 pe-2 text-start text-truncate' style='font-size: 1.8rem;'>{{title}}</span>
-                        <span style='float: right;' class="text-muted col-3 align-items-center">{{date_gap}}</span>
+                        <span class='col-9 ps-5 pe-2 text-start text-truncate' style='font-size: 1.8rem;'>{{article.title}}</span>
+                        <span style='float: right;' class="text-muted col-3 align-items-center">{{ article.created_at|time_difference_with_now }}</span>
                       </div>   
                       <div class='row justify-content-start align-items-center mx-0'>
-                        <p class='mb-1 pb-2 col-3'>💬{{ len_comments }}</p>
+                        <p class='mb-1 pb-2 col-3'>💬{{ article.comment_set.all|length }}</p>
                       </div>
                     </button>   
                   </div>
                 </div>
               </form>
-              {% endfor %}
+            {% endfor %}
 
             </div>
           </div>

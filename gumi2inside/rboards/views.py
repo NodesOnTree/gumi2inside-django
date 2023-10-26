@@ -83,82 +83,8 @@ def detail(request, pk):
 
 def rboards_list(request):
     rboards = Rboard.objects.order_by('-id')
-    months={'01':31, '02':31+28, '03':31+28+31, '04':31+28+31+30, '05':31+28+31+30+31, '06':31+28+31+30+31+30, '07':31+28+31+30+31+30+31, '08':31+28+31+30+31+30+31+31, '09':31+28+31+30+31+30+31+31+30, '10':31+28+31+30+31+30+31+31+30+31, '11':31+28+31+30+31+30+31+31+30+31+30, '12':31+28+31+30+31+30+31+31+30+31+30+31}
-    datetime_gaps=[]
-    rboard_titles=[]
-    rboard_pks=[]
-    rboard_contents=[]
-    rboard_name = []
-    rboard_like = []
-    rboard_comments = []
-    
-    for rboard in rboards:
-        time = rboard.created_at
-        comments = rboard.comment_set.all()
-        rboard_comments.append(len(comments))
-        rboard_titles.append(rboard.title)
-        rboard_pks.append(rboard.pk)
-        rboard_name.append(rboard.author.first_name)
-        rboard_like.append(rboard.like_count)
-        if len(rboard.content)>=40:
-            content=rboard.content[0:40]
-            content+='...'
-            rboard_contents.append(content)
-        else:
-            rboard_contents.append(rboard.content)
-        new_datetime=''
-        new_datetime+=str(time)[0:11]
-        new_datetime+=str(time)[11:16]
-
-        current_time = datetime.now()
-        now_datetime=''
-        now_datetime+=str(current_time)[0:11]
-        now_datetime+=str(current_time)[11:16]
-       
-        now_date=int(str(current_time)[0:11].replace('-',''))
-        now_year=str(now_date)[0:4]
-        now_month=str(now_date)[4:6]
-        now_day=str(now_date)[6:]
-        write_date=int(str(time)[0:11].replace('-',''))
-        write_year=str(write_date)[0:4]
-        write_month=str(write_date)[4:6]
-        write_day=str(write_date)[6:]
-        new_time=int(str(time)[11:13])*60+int(str(time)[14:16])
-    
-        now_time=int(str(current_time)[11:13])*60+int(str(current_time)[14:16])
-       
-        time_gap=now_time-new_time
-        
-        if now_date-write_date>=1:
-            nowdays= int(now_day)+months[now_month]
-            writedays= int(write_day)+months[write_month]
-            if now_year!=write_year:
-                nowdays+=365*(int(now_year)-int(write_year))
-                if nowdays-writedays>=365:
-                    datetime_gaps.append(f'{int(now_year)-int(write_year)}년 전')
-                elif nowdays-writedays<365:
-                    datetime_gaps.append(f'{nowdays-writedays}일 전')
-            else:
-                datetime_gaps.append(f'{nowdays-writedays}일 전')
-        else:
-            if time_gap>=60:
-                datetime_gaps.append(f'{time_gap//60}시간 전')
-            else:
-                datetime_gaps.append(f'{time_gap}분 전')
-
-    # rboard = Rboard.objects.get(pk=pk)
-    # user = rboard.author
-    # author = rboard.user
-    temp=zip(rboard_titles,datetime_gaps,rboard_pks,rboard_contents, rboard_name, rboard_like, rboard_comments)
     context = {
-        'temp': temp,
-        "rboards": rboards,
-        'datetime_gaps':datetime_gaps,
-        "rboard_titles":rboard_titles,
-        'rboard_contents':rboard_contents,
-        'rboard_name': rboard_name,
-        'rboard_like': rboard_like,
-        'rboard_comments': rboard_comments,
+     'rboards' : rboards,
     }
     return render(request, "rboards/rboards_list.html", context)
 
