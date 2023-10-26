@@ -113,7 +113,7 @@ def articles_list(request):
         'articles' : articles,
     }
     return render(request, "articles/articles_list.html", context)
-
+ 
 
 
 @login_required
