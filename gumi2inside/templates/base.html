@@ -23,7 +23,7 @@
         width: 100%;
         background-color: rgba(255, 255, 255, 0.98); 
       }
-    
+
       .bg_top2 {
         margin-top: 70px; 
       }
@@ -60,6 +60,11 @@
                       <li class="nav-item">
                         <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'ciders:main' %}">사이다</a>
                       </li> 
+                      {% if user.is_superuser %}
+                      <li class="nav-item">
+                        <a class="nav-link fw-bold" style="color: #8a2be2;" href="{% url 'amdin_img:index' %}">이미지 관리</a>
+                      </li> 
+                      {% endif %}
                   </ul>
                   <ul class="navbar-nav mb-2 mb-lg-0">
                       {% if request.user.is_authenticated %}
