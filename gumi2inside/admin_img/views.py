@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Carousel,Static_img
 from img_upload import img_upload
 # Create your views here.
 
 def index(request):
-    return render(request, "admin_img/index.html")
+    if not request.user.is_superuser:
+        return redirect('home')
+    else:
+        return render(request, "admin_img/index.html")
 
 
 def update_carousel(request, number):
